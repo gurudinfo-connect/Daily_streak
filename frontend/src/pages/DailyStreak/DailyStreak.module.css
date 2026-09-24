@@ -1,0 +1,287 @@
+.page {
+  min-height: 100vh;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 18px 48px;
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.headerLeft { display: flex; align-items: center; gap: 12px; }
+.backBtn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--vl-bg-elevated); border: 1px solid var(--vl-border);
+  color: var(--vl-text); display: flex; align-items: center; justify-content: center;
+}
+.headerTitle { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 6px; }
+.gemBadge {
+  background: var(--vl-bg-elevated); border: 1px solid var(--vl-border);
+  border-radius: 999px; padding: 6px 14px; font-weight: 700; display: flex; gap: 6px; align-items: center;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(120deg, var(--vl-purple-dark), #1c1032);
+  border: 1px solid var(--vl-border);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.heroIcon { font-size: 2.5rem; }
+.heroTitle { font-weight: 800; font-size: 1.3rem; }
+.heroTitleAccent {
+  background: linear-gradient(90deg, var(--vl-gold-soft), var(--vl-gold));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.heroSubtitle { color: var(--vl-text-dim); font-size: 0.9rem; margin-top: 4px; }
+
+/* ---------- Stats ---------- */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.statCard {
+  background: var(--vl-bg-elevated);
+  border: 1px solid var(--vl-border);
+  border-radius: 14px;
+  padding: 14px;
+}
+.statLabel { color: var(--vl-text-dim); font-size: 0.78rem; display: flex; align-items: center; gap: 6px; }
+.statValue { font-weight: 800; font-size: 1.4rem; margin-top: 4px; }
+
+/* ---------- Ultimate Reward ---------- */
+.ultimate {
+  background: radial-gradient(circle at 30% 20%, var(--vl-purple-glow), transparent 60%), var(--vl-bg-elevated);
+  border: 1px solid var(--vl-gold);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.ultimateCrown { font-size: 3rem; }
+.ultimateLabel { color: var(--vl-purple); font-weight: 700; font-size: 0.85rem; }
+.ultimateAmount { font-weight: 900; font-size: 1.8rem; color: var(--vl-text); }
+.ultimateSub { color: var(--vl-text-dim); font-size: 0.85rem; }
+.ultimateUnlock { text-align: right; color: var(--vl-text-dim); font-size: 0.8rem; }
+.ultimateUnlockDay { color: var(--vl-gold); font-weight: 700; }
+
+.comeback {
+  text-align: center;
+  color: var(--vl-gold-soft);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+/* ---------- Reward Grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+  .statsRow { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.card {
+  background: var(--vl-bg-elevated);
+  border: 1px solid var(--vl-border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  min-height: 190px;
+}
+.cardToday { border-color: var(--vl-gold); box-shadow: 0 0 24px rgba(245,180,0,0.25); }
+.cardClaimed { border-color: var(--vl-green); }
+.cardBadge {
+  align-self: flex-start;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--vl-purple);
+  color: white;
+}
+.cardBadgeToday { background: var(--vl-gold); color: #241300; }
+.cardBadgeClaimed { background: var(--vl-green); color: #06210f; }
+.cardAsset { font-size: 1.8rem; text-align: center; margin: 4px 0; }
+.cardTitle { font-size: 0.75rem; color: var(--vl-text-dim); }
+.cardAmount { font-weight: 800; font-size: 1.1rem; }
+.cardCurrency { font-size: 0.72rem; color: var(--vl-text-dim); }
+.cardAction {
+  margin-top: auto;
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+}
+.actionClaim { background: linear-gradient(90deg, var(--vl-gold), var(--vl-gold-soft)); color: #241300; }
+.actionClaimed { background: rgba(34,197,94,0.15); color: var(--vl-green); }
+.actionLocked { background: rgba(168,130,255,0.12); color: var(--vl-text-dim); }
+.actionCountdown { background: rgba(168,130,255,0.12); color: var(--vl-gold-soft); font-variant-numeric: tabular-nums; }
+
+/* ---------- Why streak ---------- */
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+@media (max-width: 700px) { .whyGrid { grid-template-columns: repeat(2, 1fr); } }
+.whyCard {
+  background: var(--vl-bg-elevated);
+  border: 1px solid var(--vl-border);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+.whyIcon { font-size: 1.5rem; margin-bottom: 6px; }
+.whyTitle { font-weight: 700; font-size: 0.85rem; }
+.whyDesc { color: var(--vl-text-dim); font-size: 0.75rem; margin-top: 4px; }
+
+/* ---------- Trust footer ---------- */
+.trustFooter {
+  background: var(--vl-bg-elevated);
+  border: 1px solid var(--vl-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--vl-text-dim);
+  font-size: 0.8rem;
+}
+.trustBrand { color: var(--vl-gold); font-weight: 700; }
+
+/* ---------- Skeleton ---------- */
+.skeletonBlock {
+  background: linear-gradient(90deg, var(--vl-bg-elevated) 25%, rgba(124,58,237,0.18) 37%, var(--vl-bg-elevated) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 14px;
+}
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* ---------- Loader ---------- */
+.loaderWrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.loaderIcon { font-size: 3rem; animation: floaty 2.2s ease-in-out infinite; }
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.loaderText { color: var(--vl-text-dim); }
+
+/* ---------- Error banner ---------- */
+.errorBanner {
+  background: rgba(255, 90, 90, 0.12);
+  border: 1px solid rgba(255,90,90,0.4);
+  color: #ffb3b3;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+}
+
+/* ---------- CPA / Claim modal ---------- */
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(5,2,15,0.75);
+  display: flex; align-items: center; justify-content: center; z-index: 50;
+}
+.modalCard {
+  background: var(--vl-bg-elevated);
+  border: 1px solid var(--vl-gold);
+  border-radius: 18px;
+  padding: 32px;
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 0 50px var(--vl-purple-glow);
+}
+.modalSpinner {
+  width: 54px; height: 54px; margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 4px solid rgba(245,180,0,0.2);
+  border-top-color: var(--vl-gold);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.modalTitle { font-weight: 700; margin-bottom: 4px; }
+.modalSub { color: var(--vl-text-dim); font-size: 0.85rem; }
+.modalSuccess { color: var(--vl-green); font-weight: 700; }
+
+/* ================= Icon artwork (supplied illustrations) ================= */
+.flameSm { width: 22px; height: 26px; object-fit: contain; vertical-align: -5px; filter: drop-shadow(0 0 6px rgba(255,140,0,.55)); }
+.coinSm { width: 24px; height: 20px; object-fit: contain; }
+.streakLine { font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+.statIcon { width: 22px; height: 22px; object-fit: contain; }
+
+.hero { justify-content: space-between; }
+.heroText { flex: 1; min-width: 0; text-align: center; }
+.heroArt { height: 120px; width: auto; max-width: 26%; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 6px 16px rgba(124,58,237,.45)); }
+.heroMobile { display: block; width: 100%; height: auto; border-radius: 16px; margin-bottom: 18px; }
+
+.ultimateArt { width: 150px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(245,180,0,.45)); animation: floaty 3.2s ease-in-out infinite; }
+@media (max-width: 600px) { .ultimateArt { width: 96px; height: 80px; } .ultimate { padding: 14px; } }
+
+.cardAsset { position: relative; height: 92px; display: flex; align-items: center; justify-content: center; margin: 2px 0; }
+.cardAsset img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.45)); transition: transform .25s ease; }
+.card:hover .cardAsset img { transform: scale(1.06); }
+.assetDim img { opacity: .55; filter: grayscale(.65) brightness(.8); }
+.assetActive img { animation: floaty 2.6s ease-in-out infinite; filter: drop-shadow(0 0 14px rgba(245,180,0,.55)); }
+.assetCheck {
+  position: absolute; top: 0; right: 4px; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--vl-green); color: #06210f; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(34,197,94,.6);
+}
+
+.whyIcon { display: block; width: 64px; height: 64px; object-fit: contain; margin: 0 auto 8px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
+
+.trustLeft { display: flex; align-items: center; gap: 10px; }
+.trustIcon { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
+@media (max-width: 600px) { .trustFooter { flex-direction: column; align-items: flex-start; gap: 8px; } }
+
+.loaderIcon { width: 84px; height: auto; filter: drop-shadow(0 0 18px rgba(245,180,0,.5)); }
+
+.modalArtWrap { position: relative; width: 96px; height: 96px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
+.modalArtWrap .modalSpinner { position: absolute; inset: 0; margin: 0; width: 96px; height: 96px; }
+.modalArt { width: 60px; height: 60px; object-fit: contain; animation: floaty 1.6s ease-in-out infinite; }
+.modalArtPop { width: 96px; height: 96px; animation: pop .5s cubic-bezier(.2,1.6,.4,1) both; filter: drop-shadow(0 0 20px rgba(245,180,0,.6)); }
+@keyframes pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ultimateArt, .assetActive img, .modalArt, .loaderIcon { animation: none; }
+}

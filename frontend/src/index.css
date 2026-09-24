@@ -1,0 +1,22 @@
+:root {
+  --vl-bg: #0d0718;
+  --vl-bg-elevated: #150f28;
+  --vl-purple: #7c3aed;
+  --vl-purple-dark: #3a1e6b;
+  --vl-purple-glow: rgba(124, 58, 237, 0.35);
+  --vl-gold: #f5b400;
+  --vl-gold-soft: #ffd76b;
+  --vl-green: #22c55e;
+  --vl-text: #f3eefb;
+  --vl-text-dim: #b3a6cf;
+  --vl-border: rgba(168, 130, 255, 0.25);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1c1032 0%, var(--vl-bg) 55%);
+  color: var(--vl-text);
+  font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+}

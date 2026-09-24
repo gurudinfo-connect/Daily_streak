@@ -1,0 +1,94 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--vl-bg-elevated);
+  border: 1px solid var(--vl-border);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 0 40px var(--vl-purple-glow);
+}
+
+.title {
+  font-weight: 800;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--vl-gold-soft), var(--vl-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: var(--vl-text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.input {
+  background: var(--vl-bg);
+  border: 1px solid var(--vl-border);
+  color: var(--vl-text);
+  caret-color: var(--vl-gold-soft);
+}
+.input:focus {
+  background: var(--vl-bg);
+  color: var(--vl-text);
+  border-color: var(--vl-purple);
+  box-shadow: 0 0 0 0.2rem var(--vl-purple-glow);
+}
+
+/* Placeholder text: Bootstrap's default is dark grey, invisible on dark inputs */
+.input::placeholder {
+  color: var(--vl-text-dim);
+  opacity: 0.85;
+}
+.input:focus::placeholder {
+  color: var(--vl-text-dim);
+  opacity: 0.6;
+}
+
+/* Browser autofill (Chrome/Edge/Safari) forces a white bg + dark text; override it */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--vl-text);
+  caret-color: var(--vl-gold-soft);
+  -webkit-box-shadow: 0 0 0 1000px var(--vl-bg) inset;
+  box-shadow: 0 0 0 1000px var(--vl-bg) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.submit {
+  background: linear-gradient(90deg, var(--vl-gold), var(--vl-gold-soft));
+  border: none;
+  color: #241300;
+  font-weight: 700;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+.error {
+  color: #ff8a8a;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.toggle {
+  background: none;
+  border: none;
+  color: var(--vl-purple);
+  font-size: 0.85rem;
+  margin-top: 14px;
+}
+
+.logo { display: block; width: 130px; height: auto; margin: 0 auto 10px; filter: drop-shadow(0 6px 16px rgba(124,58,237,.5)); }
