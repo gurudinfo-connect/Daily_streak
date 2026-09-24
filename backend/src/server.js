@@ -24,13 +24,25 @@ app.use('/api/daily-streak', streakRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+// Connect to MongoDB before handling API requests.
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('[server] database connection failed:', err.message);
+    next(err);
+  }
+});
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => console.log(`[server] listening on port ${PORT}`));
-  })
-  .catch((err) => {
-    console.error('[server] failed to start:', err.message);
-    process.exit(1);
+// Export the Express app for Vercel.
+module.exports = app;
+
+// Start a local server only when running this file directly.
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, () => {
+    console.log(`[server] listening on port ${PORT}`);
   });
+}
