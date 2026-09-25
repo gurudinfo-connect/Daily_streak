@@ -20,14 +20,7 @@ app.use(
 
 app.use(express.json());
 
-app.get('/health', (req, res) => {
-  res.json({
-    success: true,
-    message: 'VELoop Daily Streak API is running.',
-  });
-});
-
-// Connect to MongoDB before API routes
+// Connect MongoDB BEFORE API routes
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -36,6 +29,14 @@ app.use(async (req, res, next) => {
     console.error('[server] database connection failed:', err.message);
     next(err);
   }
+});
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'VELoop Daily Streak API is running.'
+  });
 });
 
 // API routes
@@ -48,7 +49,7 @@ app.use(errorHandler);
 
 module.exports = app;
 
-// Local development only
+// Local development
 if (require.main === module) {
   const PORT = process.env.PORT || 5000;
 
