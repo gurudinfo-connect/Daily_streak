@@ -1,0 +1,23 @@
+.overlay {
+  position: fixed; inset: 0; background: rgba(5, 2, 15, 0.75);
+  display: flex; align-items: center; justify-content: center; z-index: 60; padding: 18px;
+}
+.card {
+  background: var(--vl-bg-elevated); border: 1px solid var(--vl-border); border-radius: 18px;
+  padding: 26px 24px; width: 100%; max-width: 360px; text-align: center;
+  box-shadow: 0 0 50px var(--vl-purple-glow);
+}
+.icon {
+  width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(124, 58, 237, 0.18); color: var(--vl-gold-soft);
+}
+.title { font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+.sub { color: var(--vl-text-dim); font-size: 0.85rem; line-height: 1.45; margin-bottom: 20px; }
+.actions { display: flex; gap: 10px; }
+.actions button {
+  flex: 1; border-radius: 10px; padding: 10px 12px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+}
+.cancel { background: transparent; border: 1px solid var(--vl-border); color: var(--vl-text); }
+.confirm { background: linear-gradient(90deg, var(--vl-gold), var(--vl-gold-soft)); border: none; color: #241300; }
+.actions button:focus-visible { outline: 2px solid var(--vl-gold-soft); outline-offset: 2px; }

@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 
 const authRoutes = require('./routes/auth.routes');
 const streakRoutes = require('./routes/streak.routes');
+const dashboardRoutes = require('./routes/dashboard.routes');
 
 const { notFound, errorHandler } = require('./middleware/error.middleware');
 
@@ -42,6 +43,7 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/daily-streak', streakRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Error handling
 app.use(notFound);

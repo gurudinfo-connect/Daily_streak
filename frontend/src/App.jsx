@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import DailyStreakPage from './pages/DailyStreak/DailyStreakPage.jsx';
+import DashboardPage from './pages/Dashboard/DashboardPage.jsx';
 
 function ProtectedRoute({ children }) {
   const { token, loading } = useAuth();
@@ -21,6 +22,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <DailyStreakPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
             </ProtectedRoute>
           }
         />
