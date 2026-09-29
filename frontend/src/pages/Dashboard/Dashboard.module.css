@@ -1,4 +1,4 @@
-.page { min-height: 100vh; max-width: 1180px; margin: 0 auto; padding: 18px 18px 48px; }
+.page { min-height: 60vh; max-width: 1180px; margin: 0 auto; padding: 18px 18px 48px; }
 
 /* Header */
 .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
@@ -140,3 +140,37 @@
 .retry { margin-left: 8px; background: none; border: none; color: var(--vl-gold-soft); font-weight: 700; text-decoration: underline; cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+/* ---- Premium refresh ---- */
+.panel, .stat, .earnCard, .profile { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 20px; transition: transform 0.2s, box-shadow 0.2s; }
+.panel:hover, .stat:hover, .earnCard:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(108, 59, 255, 0.25); }
+.hero { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 32px; margin-bottom: 14px; border-radius: 24px;
+  background: linear-gradient(120deg, rgba(108, 59, 255, 0.28), rgba(20, 11, 41, 0.7)); border: 1px solid var(--vl-border); backdrop-filter: blur(14px); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+.eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--vl-gold-soft); }
+.heroTitle { font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 800; margin: 8px 0 6px; line-height: 1.15; }
+.heroSub { color: var(--vl-text-dim); margin: 0 0 12px; }
+.message { font-weight: 700; color: var(--vl-gold-soft); margin: 0 0 6px; }
+.quote { color: var(--vl-text-dim); font-style: italic; font-size: 0.9rem; margin: 0 0 16px; min-height: 1.3em; animation: fade 0.6s ease; }
+.ctaInline { width: auto; padding: 12px 26px; box-shadow: 0 0 24px rgba(255, 198, 46, 0.35); transition: transform 0.15s, box-shadow 0.2s; }
+.ctaInline:hover { transform: translateY(-2px); box-shadow: 0 0 34px rgba(255, 198, 46, 0.55); } .ctaInline:active { transform: scale(0.97); }
+.orb { flex-shrink: 0; width: 170px; height: 170px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(circle, rgba(255, 198, 46, 0.18), rgba(108, 59, 255, 0.12) 70%); border: 2px solid rgba(255, 198, 46, 0.5); box-shadow: 0 0 40px rgba(255, 198, 46, 0.25); animation: glow 3s ease-in-out infinite; }
+.orbFlame { width: 30px; height: 36px; object-fit: contain; animation: flick 1.6s ease-in-out infinite; }
+.orbNum { font-size: 3rem; font-weight: 800; line-height: 1; color: #fff; }
+.orbLabel { font-size: 0.7rem; letter-spacing: 0.14em; color: var(--vl-gold-soft); font-weight: 700; margin-top: 4px; }
+.threeCol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+@media (max-width: 900px) { .threeCol { grid-template-columns: 1fr; } .hero { flex-direction: column-reverse; text-align: center; padding: 24px 18px; } }
+.nextName { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 10px; color: var(--vl-gold-soft); }
+.progress { height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; margin-bottom: 8px; }
+.progressFill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--vl-purple), var(--vl-gold)); transition: width 1s ease; }
+.dashed { border-style: dashed; }
+.badge { font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(139, 92, 246, 0.2); color: #cbb8ff; border: 1px solid rgba(139, 92, 246, 0.4); }
+.achList { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.ach { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--vl-text-dim); opacity: 0.7; }
+.achDone { color: var(--vl-gold-soft); opacity: 1; font-weight: 600; }
+.placeholder { max-width: 460px; margin: 60px auto; text-align: center; padding: 40px 28px; border-radius: 24px; background: var(--vl-bg-elevated); border: 1px dashed var(--vl-border); backdrop-filter: blur(12px); }
+.phIcon { color: var(--vl-gold); } .phText { color: var(--vl-text-dim); margin: 8px 0 16px; }
+@keyframes glow { 50% { box-shadow: 0 0 60px rgba(255, 198, 46, 0.4); } }
+@keyframes flick { 50% { transform: scale(1.12) rotate(-3deg); } }
+@keyframes fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .orb, .orbFlame, .quote { animation: none; } .progressFill, .panel, .stat, .earnCard { transition: none; } }

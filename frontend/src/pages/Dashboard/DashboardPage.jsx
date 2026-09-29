@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, LogOut, Flame, Trophy, CalendarCheck, HeartCrack, Check } from 'lucide-react';
+import { Flame, Trophy, CalendarCheck, HeartCrack, Check, Lock, Sparkles, Zap, Gift } from 'lucide-react';
 import styles from './Dashboard.module.css';
 import { ICONS } from '../../assets/icons.js';
 import * as dashboardApi from '../../services/dashboardApi.js';
-import LogoutConfirm from '../../components/LogoutConfirm.jsx';
-import useLogout from '../../components/useLogout.js';
+import friendlyError from '../../utils/friendlyError.js';
+import useCountUp from '../../hooks/useCountUp.js';
+
+const QUOTES = ['Consistency beats intensity.', 'One day at a time.', "Don't break the chain.", 'Your future self will thank you.'];
+
+const streakMessage = (n) =>
+  n <= 0 ? 'Check in today to start your streak.' : n <= 2 ? 'Great start! Keep going.' : n <= 6 ? "You're building momentum!" : n <= 13 ? 'One week strong! 🔥' : n <= 29 ? "You're becoming unstoppable!" : 'Legendary consistency! 🏆';
 
 const dayKey = (d) => {
   const x = new Date(d);
@@ -35,7 +40,7 @@ function buildWeek(last7Days) {
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  const { confirming, askLogout, cancelLogout, confirmLogout } = useLogout();
+  const [quoteIdx, setQuoteIdx] = useState(0);
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
 
@@ -44,7 +49,7 @@ export default function DashboardPage() {
     try {
       setData(await dashboardApi.getDashboard());
     } catch (err) {
-      setError(err?.response?.data?.message || 'Unable to load your dashboard. Please try again.');
+      setError(friendlyError(err));
     }
   }, []);
 
@@ -52,26 +57,18 @@ export default function DashboardPage() {
     load();
   }, [load]);
 
-  const week = useMemo(() => buildWeek(data?.last7Days || []), [data]);
+  useEffect(() => {
+    const id = setInterval(() => setQuoteIdx((i) => (i + 1) % QUOTES.length), 9000);
+    return () => clearInterval(id);
+  }, []);
 
-  const header = (
-    <div className={styles.header}>
-      <div className={styles.headerLeft}>
-        <button className={styles.iconBtn} onClick={() => navigate('/daily-streak')} aria-label="Back to Daily Streak" title="Back to Daily Streak">
-          <ChevronLeft size={20} />
-        </button>
-        <h1 className={styles.title}>Dashboard</h1>
-      </div>
-      <button className={styles.logoutBtn} onClick={askLogout}>
-        <LogOut size={16} /> Log out
-      </button>
-    </div>
-  );
+  const streakCount = useCountUp(data?.streak.currentStreak || 0);
+
+  const week = useMemo(() => buildWeek(data?.last7Days || []), [data]);
 
   if (!data) {
     return (
       <div className={styles.page}>
-        {header}
         {error ? (
           <div className={styles.errorBanner}>
             {error} <button className={styles.retry} onClick={load}>Try again</button>
@@ -84,7 +81,6 @@ export default function DashboardPage() {
             <div className={styles.skeleton} style={{ height: 220 }} />
           </div>
         )}
-        {confirming && <LogoutConfirm onConfirm={confirmLogout} onCancel={cancelLogout} />}
       </div>
     );
   }
@@ -96,10 +92,31 @@ export default function DashboardPage() {
   const weekVes = week.reduce((s, d) => s + d.ves, 0);
   const weekInr = week.reduce((s, d) => s + d.inr, 0);
   const daysLeft = Math.max(streak.cycleLength - streak.currentStreak, 0);
+  const progressPct = Math.min(Math.round((streak.currentStreak / streak.cycleLength) * 100), 100);
+  const achievements = [
+    { label: 'First check-in', done: streak.totalCheckIns >= 1 },
+    { label: '7-day warrior', done: streak.longestStreak >= 7 },
+    { label: '30-day champion', done: streak.longestStreak >= 30 },
+    { label: 'Consistency master (60)', done: streak.longestStreak >= 60 },
+  ];
 
   return (
     <div className={styles.page}>
-      {header}
+      <section className={styles.hero}>
+        <div className={styles.heroText}>
+          <span className={styles.eyebrow}><Sparkles size={14} /> Daily Streak &amp; Rewards</span>
+          <h1 className={styles.heroTitle}>Keep Your Streak Alive 🔥</h1>
+          <p className={styles.heroSub}>Build consistency. Earn rewards. Level up every day.</p>
+          <p className={styles.message}>{streakMessage(streak.currentStreak)}</p>
+          <p className={styles.quote} key={quoteIdx} aria-live="off">“{QUOTES[quoteIdx]}”</p>
+          <button className={`${styles.cta} ${styles.ctaInline}`} onClick={() => navigate('/daily-streak')}>Check in today</button>
+        </div>
+        <div className={styles.orb} aria-label={`${streak.currentStreak} day streak`}>
+          <img className={styles.orbFlame} src={ICONS.flame} alt="" />
+          <div className={styles.orbNum}>{streakCount}</div>
+          <div className={styles.orbLabel}>DAY STREAK</div>
+        </div>
+      </section>
 
       <section className={styles.profile}>
         <div className={styles.avatar} aria-hidden="true">{displayName.charAt(0).toUpperCase()}</div>
@@ -143,6 +160,37 @@ export default function DashboardPage() {
         <Stat icon={<Check size={16} />} label="Cycles completed" value={streak.cyclesCompleted} />
         <Stat icon={<HeartCrack size={16} />} label="Streaks lost" value={streak.streaksLost} />
       </section>
+
+      <div className={styles.threeCol}>
+        <section className={styles.panel}>
+          <div className={styles.panelHead}>
+            <h2 className={styles.panelTitle}>Next reward</h2>
+            <span className={styles.panelNote}>{Math.min(streak.currentStreak, streak.cycleLength)} / {streak.cycleLength} days</span>
+          </div>
+          <div className={styles.nextName}><Gift size={18} /> Ultimate Reward</div>
+          <div className={styles.progress} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPct}>
+            <div className={styles.progressFill} style={{ width: `${progressPct}%` }} />
+          </div>
+          <div className={styles.sub}>{daysLeft > 0 ? `${daysLeft} more day${daysLeft === 1 ? '' : 's'} to unlock!` : 'Unlocked — claim it on Daily Streak!'}</div>
+        </section>
+        <section className={`${styles.panel} ${styles.dashed}`}>
+          <div className={styles.panelHead}>
+            <h2 className={styles.panelTitle}><Zap size={15} /> Level &amp; XP</h2>
+            <span className={styles.badge}>Coming soon</span>
+          </div>
+          <div className={styles.sub}>XP and levels aren't tracked by the backend yet. This card is ready to connect once they are.</div>
+        </section>
+        <section className={styles.panel}>
+          <div className={styles.panelHead}><h2 className={styles.panelTitle}>Achievements</h2></div>
+          <ul className={styles.achList}>
+            {achievements.map((a) => (
+              <li key={a.label} className={`${styles.ach} ${a.done ? styles.achDone : ''}`}>
+                {a.done ? <Check size={14} /> : <Lock size={14} />} {a.label}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
 
       <div className={styles.twoCol}>
         <section className={styles.panel}>
@@ -220,7 +268,6 @@ export default function DashboardPage() {
         )}
       </section>
 
-      {confirming && <LogoutConfirm onConfirm={confirmLogout} onCancel={cancelLogout} />}
     </div>
   );
 }
