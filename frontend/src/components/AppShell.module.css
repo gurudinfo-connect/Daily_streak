@@ -60,7 +60,7 @@
 .main { flex: 1; animation: fadeUp 0.4s var(--vl-ease); }
 
 .footer { text-align: center; padding: 26px 18px 30px; margin: 10px 20px 0; border-top: 1px solid var(--vl-border); color: var(--vl-text-dim); font-size: 0.82rem; }
-.fBrand { display: inline-flex; align-items: center; gap: 6px; font-family: var(--vl-font-display); font-weight: 700; color: #fff; font-size: 0.95rem; } .fBrand svg { color: var(--vl-gold); }
+.fBrand { display: inline-flex; align-items: center; gap: 6px; font-family: var(--vl-font-display); font-weight: 700; color: #fff; font-size: 0.95rem; } .fBrand img { object-fit: contain; }
 .fTag { margin: 4px 0 8px; } .copy { font-size: 0.72rem; opacity: 0.75; }
 .bottom { display: none; }
 

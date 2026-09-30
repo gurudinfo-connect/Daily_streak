@@ -96,7 +96,7 @@ export default function LoginPage() {
         </button>
         <p className={styles.tagline}>Build your streak. Earn your rewards.</p>
       </div>
-      <p className={styles.legal}>© 2026 VELOop</p>
+      <p className={styles.legal}>© 2026 VELoop</p>
     </div>
   );
 }

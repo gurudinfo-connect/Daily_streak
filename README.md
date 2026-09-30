@@ -91,7 +91,7 @@ except the JWT identity and, as a hint only, the requested day.
 - No production credentials are included anywhere in this repo — `.env.example`
   files only.
 
-## Fire Streak frontend redesign
+## Daily Streak frontend redesign
 
 The frontend was restyled in place (same Vite + React + lucide-react stack, same icon set and artwork, no backend or API changes).
 

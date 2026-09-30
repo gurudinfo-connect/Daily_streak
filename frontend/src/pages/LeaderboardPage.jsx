@@ -14,7 +14,7 @@ export default function LeaderboardPage() {
     <PageGate>
       {({ dash }) => (
         <div className="vl-page">
-          <PageTitle icon={<Trophy size={26} />} title="🔥 Fire Streak Leaderboard" sub="Top streaks across VELOop." />
+          <PageTitle icon={<Trophy size={26} />} title="🔥 Daily Streak Leaderboard" sub="Top streaks across VELoop." />
           <Card lift={false}>
             <div className={styles.leadList}>
               <div className={`${styles.leadRow} ${styles.leadYou}`}>

@@ -286,7 +286,7 @@
   .ultimateArt, .assetActive img, .modalArt, .loaderIcon { animation: none; }
 }
 
-/* ================= Fire Streak refresh (glass + gradient borders) ================= */
+/* ================= Daily Streak refresh (glass + gradient borders) ================= */
 .page { min-height: 0; max-width: 1080px; padding: 22px 20px 40px; }
 @media (max-width: 600px) { .page { padding: 16px 14px 32px; } }
 .header { margin-bottom: 20px; }

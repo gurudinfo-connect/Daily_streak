@@ -12,6 +12,7 @@ import useLogout from './useLogout.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { OverviewProvider, useOverview } from '../context/OverviewContext.jsx';
 import { buildMilestones, displayNameOf, getCheckInState } from '../utils/streakInsights';
+import fireLogo from '../assets/veloop-fire.png';
 import Celebration from './widgets/Celebration.jsx';
 
 const NAV = [
@@ -91,7 +92,7 @@ function Shell() {
         <header className={styles.nav}>
           <div className={styles.navInner}>
             <button className={styles.menuBtn} aria-label="Open menu" aria-expanded={drawer} onClick={() => setDrawer(true)}><Menu size={20} /></button>
-            <NavLink to="/dashboard" className={styles.brand} aria-label="VELOop Fire Streak home"><BrandLogo size="sm" /></NavLink>
+            <NavLink to="/dashboard" className={styles.brand} aria-label="VELoop Daily Streak home"><BrandLogo size="sm" /></NavLink>
             <nav className={styles.links} aria-label="Primary">
               {TOP_LINKS.map(({ to, label }) => (
                 <NavLink key={to} to={to} className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}>{label}</NavLink>
@@ -167,9 +168,9 @@ function Shell() {
           <div className={styles.content}>
             <main key={pathname} className={styles.main}><Outlet /></main>
             <footer className={styles.footer}>
-              <div className={styles.fBrand}><Flame size={16} /> VELOop — Fire Streak</div>
+              <div className={styles.fBrand}><img src={fireLogo} alt="" width={18} height={18} /> VELoop — Daily Streak</div>
               <div className={styles.fTag}>Build your streak. Earn your rewards.</div>
-              <div className={styles.copy}>© 2026 VELOop</div>
+              <div className={styles.copy}>© 2026 VELoop</div>
             </footer>
           </div>
         </div>
