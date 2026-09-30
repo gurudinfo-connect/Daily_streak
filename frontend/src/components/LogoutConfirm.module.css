@@ -1,23 +1,12 @@
-.overlay {
-  position: fixed; inset: 0; background: rgba(5, 2, 15, 0.75);
-  display: flex; align-items: center; justify-content: center; z-index: 60; padding: 18px;
-}
-.card {
-  background: var(--vl-bg-elevated); border: 1px solid var(--vl-border); border-radius: 18px;
-  padding: 26px 24px; width: 100%; max-width: 360px; text-align: center;
-  box-shadow: 0 0 50px var(--vl-purple-glow);
-}
-.icon {
-  width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(124, 58, 237, 0.18); color: var(--vl-gold-soft);
-}
-.title { font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
-.sub { color: var(--vl-text-dim); font-size: 0.85rem; line-height: 1.45; margin-bottom: 20px; }
+.overlay { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 18px; background: rgba(8, 3, 20, 0.78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: fade 0.22s ease; }
+.card { width: 100%; max-width: 380px; padding: 28px 24px; border-radius: 24px; text-align: center; background: linear-gradient(160deg, rgba(76, 29, 149, 0.55), rgba(20, 11, 41, 0.96)); border: 1px solid rgba(139, 92, 246, 0.45); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 50px var(--vl-purple-glow); animation: scaleIn 0.26s var(--vl-ease); }
+.icon { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: rgba(255, 198, 46, 0.14); color: var(--vl-gold-soft); box-shadow: inset 0 0 0 1px rgba(255, 198, 46, 0.35); }
+.title { font-family: var(--vl-font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; }
+.sub { color: var(--vl-text-dim); font-size: 0.86rem; line-height: 1.5; margin-bottom: 22px; }
 .actions { display: flex; gap: 10px; }
-.actions button {
-  flex: 1; border-radius: 10px; padding: 10px 12px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
-}
-.cancel { background: transparent; border: 1px solid var(--vl-border); color: var(--vl-text); }
-.confirm { background: linear-gradient(90deg, var(--vl-gold), var(--vl-gold-soft)); border: none; color: #241300; }
-.actions button:focus-visible { outline: 2px solid var(--vl-gold-soft); outline-offset: 2px; }
+.actions button { flex: 1; min-height: 44px; border-radius: 12px; padding: 10px 12px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: transform 0.15s; }
+.actions button:hover { transform: scale(1.02); }
+.cancel { background: rgba(139, 92, 246, 0.16); border: 1px solid rgba(139, 92, 246, 0.5); color: var(--vl-text); }
+.confirm { background: linear-gradient(115deg, #ffd75a, #ffc62e 55%, #ff9f1c); border: none; color: #241300; }
+@keyframes fade { from { opacity: 0; } } @keyframes scaleIn { from { opacity: 0; transform: scale(0.94); } }
+@media (prefers-reduced-motion: reduce) { .overlay, .card { animation: none; } }

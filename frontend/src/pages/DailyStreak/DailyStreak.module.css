@@ -285,3 +285,48 @@
 @media (prefers-reduced-motion: reduce) {
   .ultimateArt, .assetActive img, .modalArt, .loaderIcon { animation: none; }
 }
+
+/* ================= Fire Streak refresh (glass + gradient borders) ================= */
+.page { min-height: 0; max-width: 1080px; padding: 22px 20px 40px; }
+@media (max-width: 600px) { .page { padding: 16px 14px 32px; } }
+.header { margin-bottom: 20px; }
+.headerTitle { font-family: var(--vl-font-display); font-size: 1.6rem; font-weight: 800; }
+.gemBadge { background: linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); border-color: rgba(255, 198, 46, 0.4); box-shadow: 0 0 18px rgba(255, 198, 46, 0.15); }
+
+.hero { border-radius: 26px; border: 1px solid rgba(139, 92, 246, 0.35); box-shadow: 0 20px 50px rgba(76, 29, 149, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: radial-gradient(circle at 50% 0%, rgba(255, 198, 46, 0.12), transparent 50%), linear-gradient(150deg, #4c1d95, #2d1470 50%, #170a35); }
+.heroTitle { font-family: var(--vl-font-display); }
+
+.statCard, .card, .whyCard, .trustFooter {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 60%), rgba(26, 13, 50, 0.62);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: 1px solid rgba(139, 92, 246, 0.28); box-shadow: 0 12px 30px rgba(5, 2, 15, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.25s var(--vl-ease), box-shadow 0.25s var(--vl-ease), border-color 0.25s;
+}
+.statCard { border-radius: 20px; padding: 16px; }
+.card, .whyCard { border-radius: 20px; }
+.statCard:hover, .card:hover, .whyCard:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(76, 29, 149, 0.35); border-color: rgba(167, 139, 250, 0.5); }
+.statValue { font-family: var(--vl-font-display); }
+.cardToday { border-color: rgba(255, 198, 46, 0.7); box-shadow: 0 0 30px rgba(255, 198, 46, 0.22), 0 12px 30px rgba(5, 2, 15, 0.45); }
+.cardClaimed { border-color: rgba(255, 198, 46, 0.45); background: linear-gradient(160deg, rgba(255, 198, 46, 0.12), rgba(108, 59, 255, 0.14)), rgba(26, 13, 50, 0.7); }
+.cardClaimed::after, .cardToday::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.1) 50%, transparent 65%); transform: translateX(-120%); animation: cardShine 5.5s ease-in-out infinite; pointer-events: none; }
+@keyframes cardShine { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(120%); } }
+.cardBadgeClaimed { background: var(--vl-gold); color: #241300; }
+.actionClaim { min-height: 38px; background: linear-gradient(115deg, #ffd75a, #ffc62e 55%, #ff9f1c); box-shadow: 0 0 16px rgba(255, 198, 46, 0.4); cursor: pointer; transition: transform 0.18s, box-shadow 0.2s; }
+.actionClaim:hover:not(:disabled) { transform: scale(1.03); box-shadow: 0 0 26px rgba(255, 198, 46, 0.6); } .actionClaim:active:not(:disabled) { transform: scale(0.97); }
+.actionClaimed { background: rgba(255, 198, 46, 0.14); color: var(--vl-gold-soft); }
+.actionLocked, .actionCountdown { background: rgba(139, 92, 246, 0.14); }
+
+.ultimate { border-radius: 24px; border: 1px solid rgba(255, 198, 46, 0.55); background: radial-gradient(circle at 25% 20%, rgba(139, 92, 246, 0.4), transparent 60%), linear-gradient(150deg, rgba(76, 29, 149, 0.55), rgba(23, 10, 53, 0.8)); box-shadow: 0 16px 44px rgba(76, 29, 149, 0.35), 0 0 32px rgba(255, 198, 46, 0.12); }
+.ultimateLabel { color: var(--vl-gold-soft); } .ultimateAmount { font-family: var(--vl-font-display); }
+.trustFooter { border-radius: 16px; }
+.errorBanner { border-radius: 14px; }
+.modalOverlay { background: rgba(8, 3, 20, 0.78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: overlayIn 0.25s ease; padding: 18px; }
+.modalCard { border-radius: 24px; border: 1px solid rgba(255, 198, 46, 0.55); background: linear-gradient(160deg, rgba(76, 29, 149, 0.6), rgba(20, 11, 41, 0.95)); box-shadow: 0 0 60px rgba(108, 59, 255, 0.4); animation: modalIn 0.3s var(--vl-ease); }
+.modalSuccess { color: var(--vl-gold-soft); }
+.skeletonBlock { border-radius: 20px; }
+.loaderWrap { min-height: 60vh; }
+@keyframes overlayIn { from { opacity: 0; } }
+@keyframes modalIn { from { opacity: 0; transform: scale(0.94); } }
+@media (max-width: 380px) { .grid { grid-template-columns: 1fr; } .statsRow { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .cardClaimed::after, .cardToday::after, .modalOverlay, .modalCard { animation: none; } }

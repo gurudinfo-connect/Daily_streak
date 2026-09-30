@@ -1,4 +1,0 @@
-.wrap { position: fixed; inset: 0; z-index: 80; pointer-events: none; overflow: hidden; }
-.wrap i { position: absolute; top: -12px; width: 8px; height: 14px; border-radius: 2px; animation: fall ease-in forwards; }
-@keyframes fall { to { transform: translateY(105vh) rotate(calc(var(--r) + 540deg)); opacity: 0.9; } }
-@media (prefers-reduced-motion: reduce) { .wrap { display: none; } }

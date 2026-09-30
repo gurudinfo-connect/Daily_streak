@@ -4,6 +4,7 @@ import { Eye, EyeOff, Flame, Gift, Trophy, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
 import styles from './LoginPage.module.css';
 import AnimatedBackground from '../components/AnimatedBackground.jsx';
+import BrandLogo from '../components/BrandLogo.jsx';
 import friendlyError from '../utils/friendlyError.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,7 +36,7 @@ export default function LoginPage() {
     try {
       if (isLogin) await login(email, password);
       else await register(email, password, name);
-      navigate('/daily-streak');
+      navigate('/dashboard');
     } catch (err) {
       const status = err?.response?.status;
       setError(
@@ -52,12 +53,9 @@ export default function LoginPage() {
     <div className={styles.wrap}>
       <AnimatedBackground />
       <div className={styles.card}>
-        <div className={styles.logoRow}>
-          <span className={styles.logoBadge}><Flame size={22} /></span>
-          <span className={styles.brand}>VELOop</span>
-        </div>
-        <h1 className={styles.title}>{isLogin ? 'Welcome Back 🔥' : 'Start Your Streak 🔥'}</h1>
-        <p className={styles.subtitle}>{isLogin ? 'Your streak is waiting for you.' : 'Create an account and turn consistency into rewards.'}</p>
+        <div className={styles.logoRow}><BrandLogo size="lg" center /></div>
+        <h1 className={styles.title}>{isLogin ? 'Welcome back.' : 'Start your streak today.'}</h1>
+        <p className={styles.subtitle}>{isLogin ? 'Keep the fire alive.' : 'Create an account and turn consistency into rewards.'}</p>
         <div className={styles.perks} aria-hidden="true">
           <span><Flame size={14} /> Streaks</span><span><Gift size={14} /> Rewards</span><span><Trophy size={14} /> Progress</span>
         </div>
@@ -96,7 +94,9 @@ export default function LoginPage() {
         <button className={styles.toggle} onClick={() => { setMode(isLogin ? 'register' : 'login'); setError(''); setTouched({}); }}>
           {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Log in'}
         </button>
+        <p className={styles.tagline}>Build your streak. Earn your rewards.</p>
       </div>
+      <p className={styles.legal}>© 2026 VELOop</p>
     </div>
   );
 }

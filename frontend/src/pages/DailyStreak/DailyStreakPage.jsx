@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from './DailyStreak.module.css';
 import StreakLoader from './StreakLoader.jsx';
 import StreakSkeleton from './StreakSkeleton.jsx';
-import StreakHero from './StreakHero.jsx';
-import Journey from './Journey.jsx';
-import Confetti from '../../components/Confetti.jsx';
-import friendlyError from '../../utils/friendlyError.js';
-import v from './Streak.module.css';
+import StreakHeader from './StreakHeader.jsx';
+import HeroBanner from './HeroBanner.jsx';
+import StreakStats from './StreakStats.jsx';
 import UltimateReward from './UltimateReward.jsx';
 import RewardGrid from './RewardGrid.jsx';
 import CpaDemo from './CpaDemo.jsx';
@@ -39,7 +37,7 @@ export default function DailyStreakPage() {
       applyResponse(res);
       setError('');
     } catch (err) {
-      setError(friendlyError(err));
+      setError(err?.response?.data?.message || 'Unable to load your streak. Please try again.');
     }
   }, [applyResponse]);
 
@@ -82,7 +80,7 @@ export default function DailyStreakPage() {
       } catch (err) {
         setCpaPhase(null);
         setClaimingDay(null);
-        setError(err?.response ? "This reward can't be claimed right now. Please try again." : friendlyError(err));
+        setError(err?.response?.data?.message || 'Unable to process your reward. Please try again.');
         // Refresh so the UI reflects the true backend state after a rejected claim
         loadFull();
       }
@@ -93,8 +91,8 @@ export default function DailyStreakPage() {
   if (initialLoading) return <StreakLoader />;
   if (!data && error) {
     return (
-      <div className={v.page}>
-        <div className={styles.errorBanner}>{error} <button className={v.retry} onClick={loadFull}>Try Again</button></div>
+      <div className={styles.page}>
+        <div className={styles.errorBanner}>{error}</div>
       </div>
     );
   }
@@ -106,21 +104,22 @@ export default function DailyStreakPage() {
   const claimingCard = rewards.find((r) => r.day === claimingDay);
 
   return (
-    <div className={v.page}>
-      {error && <div className={styles.errorBanner} role="alert">{error}</div>}
+    <div className={styles.page}>
+      <StreakHeader gemBalance={gemBalance} />
+      <HeroBanner />
 
-      <StreakHero
-        streak={streak}
-        nextReward={nextReward}
-        wallet={wallet}
-        rewards={rewards}
-        nowFn={now}
-        onClaim={handleClaim}
-        onTimerComplete={refreshStatusOnly}
-        claimingDay={claimingDay}
-      />
-      <Journey rewards={rewards} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+        <span className={styles.streakLine}><img className={styles.flameSm} src={ICONS.flame} alt="" /> {streak.currentStreak} Day Streak</span>
+        <span style={{ color: 'var(--vl-text-dim)', fontSize: '0.8rem' }}>Keep it going!</span>
+      </div>
+
+      {error && <div className={styles.errorBanner}>{error}</div>}
+
+      <StreakStats totalRewards={streak.totalRewards} checkedIn={streak.checkedIn} nextReward={nextReward} />
       <UltimateReward reward={ultimateCard} />
+
+      <div className={styles.comeback}>✦ Come back tomorrow for more rewards! ✦</div>
+
       <RewardGrid
         rewards={rewards}
         nowFn={now}
@@ -133,7 +132,6 @@ export default function DailyStreakPage() {
       <TrustFooter />
 
       {cpaPhase && <CpaDemo phase={cpaPhase} icon={claimingCard ? getRewardIcon(claimingCard) : ICONS.coin} />}
-      {cpaPhase === 'success' && <Confetti />}
     </div>
   );
 }

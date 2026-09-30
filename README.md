@@ -90,3 +90,15 @@ except the JWT identity and, as a hint only, the requested day.
   design assets once available locally.
 - No production credentials are included anywhere in this repo — `.env.example`
   files only.
+
+## Fire Streak frontend redesign
+
+The frontend was restyled in place (same Vite + React + lucide-react stack, same icon set and artwork, no backend or API changes).
+
+- `frontend/src/index.css` — design tokens, glass card / button primitives, reduced-motion handling
+- `components/AnimatedBackground*` — layered gradient + slow blobs, waves, dust, sparks, glow dots
+- `components/AppShell*` — glass header, sidebar (drawer on tablet/mobile), bottom nav, notifications + profile dropdowns
+- `context/OverviewContext.jsx` — loads `/daily-streak` + `/dashboard` once for the shell; check-in uses the existing `POST /daily-streak/claim`
+- `components/widgets/` — hero streak, stats, check-in, weekly tracker, next reward, streak health, motivation, milestones, activity, profile, celebration
+- `utils/streakInsights.js` — pure helpers that derive UI state from real API data
+- New routes: `/rewards`, `/achievements`, `/milestones`, `/activity`, `/profile`, `/settings` (Leaderboard is a prepared UI: the backend has no leaderboard endpoint)

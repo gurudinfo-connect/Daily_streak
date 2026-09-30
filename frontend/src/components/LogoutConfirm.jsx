@@ -20,7 +20,7 @@ export default function LogoutConfirm({ onConfirm, onCancel }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.icon}><LogOut size={22} /></div>
-        <div id="logout-title" className={styles.title}>Log out of VELoop?</div>
+        <div id="logout-title" className={styles.title}>Log out of VELOop?</div>
         <div className={styles.sub}>Your streak and rewards are saved. Log in again any time to keep going.</div>
         <div className={styles.actions}>
           <button type="button" className={styles.cancel} onClick={onCancel} autoFocus>Stay logged in</button>
