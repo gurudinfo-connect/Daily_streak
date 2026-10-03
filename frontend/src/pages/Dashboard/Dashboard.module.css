@@ -1,6 +1,16 @@
 .page { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; display: grid; gap: 22px; }
 .kicker { margin: 0; color: var(--vl-text-dim); font-size: .92rem; font-weight: 600; }
-.hero { display: flex; align-items: center; gap: 18px; }
+.hero { display: grid; grid-template-columns: 1fr minmax(260px, 400px) 330px; gap: 24px; align-items: center; }
+.heroLeft { min-width: 0; }
+.heroRing { position: relative; }
+.floatA { position: absolute; top: 2%; left: -2%; animation: float 5s ease-in-out infinite; }
+.floatB { position: absolute; bottom: 6%; right: -2%; animation: float 6s -2s ease-in-out infinite; }
+.mono { margin: 0; font: 500 .75rem 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; color: #8f8aab; }
+.of { color: #5d5877; font-size: .5em; }
+.facts { margin: 18px 0 0; display: grid; gap: 8px; max-width: 260px; }
+.facts div { display: flex; justify-content: space-between; border-bottom: 1px solid #1d1a30; padding-bottom: 8px; }
+.facts dt { color: #8f8aab; font-size: .88rem; } .facts dd { margin: 0; font-weight: 700; } .gold { color: var(--vl-gold); }
+.trailTitle { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -.03em; }
 .heroFlame { flex: none; animation: pulse 3s ease-in-out infinite; }
 @keyframes pulse { 50% { transform: scale(1.06); } }
 .streakLine { margin: 2px 0 0; font-size: clamp(1.7rem, 4.6vw, 2.8rem); font-weight: 800; line-height: 1.05; }
@@ -8,10 +18,10 @@
 .msg { margin: 6px 0 0; color: var(--vl-text-dim); }
 
 .grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
-.journey { background: linear-gradient(180deg, #0e1230, #0a0d24); border: 1px solid var(--vl-border); border-radius: 20px; padding: 18px 12px 8px; overflow: hidden; }
+.journey { background: #0a0814; border: 1px solid var(--vl-border); border-radius: 20px; padding: 18px 12px 8px; overflow: hidden; }
 .side { display: grid; gap: 14px; }
 
-.today { display: grid; gap: 12px; padding: 18px; border-radius: 20px; background: linear-gradient(160deg, #1d1850, #121540); border: 1px solid rgba(143, 107, 255, .45); }
+.today { display: grid; gap: 12px; padding: 18px; border-radius: 22px; background: radial-gradient(80% 60% at 50% 0, rgba(255, 194, 74, .12), transparent), #0c0a18; border: 1px solid #231f3a; }
 .todayArt { justify-self: center; width: 120px; height: 120px; object-fit: contain; animation: float 3s ease-in-out infinite; }
 @keyframes float { 50% { transform: translateY(-5px); } }
 .todayBody { text-align: center; }
@@ -33,6 +43,8 @@
 .progress dt { color: var(--vl-text-dim); font-size: .88rem; }
 .progress dd { margin: 0; font-weight: 700; text-align: right; }
 
+@media (max-width: 1100px) { .hero { grid-template-columns: 1fr 1fr; } .hero > section { grid-column: 1 / -1; } }
 @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .hero { grid-template-columns: 1fr; } .heroRing { max-width: 300px; margin: 0 auto; order: -1; } }
 @media (max-width: 480px) { .page { padding: 16px 12px 40px; } .wallet { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .heroFlame, .todayArt { animation: none; } }

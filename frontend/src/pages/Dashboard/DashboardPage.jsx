@@ -4,6 +4,7 @@ import styles from './Dashboard.module.css';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useOverview } from '../../context/OverviewContext.jsx';
 import { PageGate, CheckInButton, ActivityCard } from '../../components/widgets/Widgets.jsx';
+import StreakRing from '../../components/journey/StreakRing.jsx';
 import StreakJourney from '../../components/journey/StreakJourney.jsx';
 import useCountdown from '../../hooks/useCountdown.js';
 import useCountUp from '../../hooks/useCountUp.js';
@@ -87,20 +88,30 @@ export default function DashboardPage() {
         return (
           <div className={styles.page}>
             <header className={styles.hero}>
-              <img className={styles.heroFlame} src={ICONS.flame} alt="" width="72" height="90" />
-              <div>
-                <p className={styles.kicker}>Welcome back, {name}</p>
-                <h1 className={styles.streakLine}><span className={styles.num}>{n}</span> day streak</h1>
+              <div className={styles.heroLeft}>
+                <p className={styles.mono}>Your streak</p>
+                <h1 className={styles.streakLine}><span className={styles.num}>{String(dash.streak.currentDay).padStart(2, '0')}</span><span className={styles.of}>/{String(streakData.streak.totalRewards).padStart(2, '0')}</span></h1>
                 <p className={styles.msg}>{streakMessage(n)}</p>
+                <dl className={styles.facts}>
+                  <div><dt>Chain</dt><dd>{n} days</dd></div>
+                  <div><dt>Banked</dt><dd>{dash.wallet.VES} VES</dd></div>
+                  {streakData.nextReward && <div><dt>Next unlock</dt><dd className={styles.gold}>{formatAmount(streakData.nextReward.currency, streakData.nextReward.amount)}</dd></div>}
+                </dl>
               </div>
+              <div className={styles.heroRing}>
+                <StreakRing total={streakData.streak.totalRewards} done={streakData.streak.checkedIn} value={n} sub={`Day ${String(streakData.streak.currentDay).padStart(2, '0')} / ${String(streakData.streak.totalRewards).padStart(2, '0')}`} />
+                <img className={`${styles.floatA}`} src={ICONS.stay} alt="" width="84" height="82" decoding="async" />
+                <img className={`${styles.floatB}`} src={ICONS.coin} alt="" width="80" height="64" decoding="async" />
+              </div>
+              <TodayReward streakData={streakData} />
             </header>
 
             <div className={styles.grid}>
-              <section className={styles.journey} aria-label="Reward roadmap">
+              <h2 className={styles.trailTitle}>The trail</h2>
+              <section className={styles.journey} aria-label="The trail">
                 <StreakJourney streakData={streakData} celebration={celebration} claiming={claiming} />
               </section>
               <aside className={styles.side}>
-                <TodayReward streakData={streakData} />
                 <WalletStrip dash={dash} />
                 <Progress dash={dash} streakData={streakData} />
               </aside>

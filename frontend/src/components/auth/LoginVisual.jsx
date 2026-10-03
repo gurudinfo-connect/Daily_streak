@@ -1,32 +1,33 @@
 import React from 'react';
 import styles from './LoginVisual.module.css';
 import { ICONS } from '../../assets/icons.js';
+import StreakRing from '../journey/StreakRing.jsx';
+import BrandLogo from '../BrandLogo.jsx';
 
-// Decorative only: a small, static preview of the journey. No streak or reward
-// numbers are shown here, so nothing can disagree with the backend.
-const NODES = [
-  { x: 14, y: 70, art: ICONS.coin, s: 56 },
-  { x: 36, y: 44, art: ICONS.day5, s: 64 },
-  { x: 60, y: 62, art: ICONS.day4, s: 70 },
-  { x: 84, y: 30, art: ICONS.day7, s: 96 },
-];
-
+// Decorative preview of the product. The "3 days in" ring is illustration only —
+// it is not account data and nothing here is read from or sent to the backend.
 export default function LoginVisual() {
   return (
     <section className={styles.world} aria-hidden="true">
-      <div className={styles.stars} />
-      <p className={styles.line}>Show up daily.<br />Walk away with rewards.</p>
-      <div className={styles.map}>
-        <svg className={styles.road} viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M14 70 C25 70 25 44 36 44 S50 62 60 62 S74 30 84 30" />
-        </svg>
-        {NODES.map((n, i) => (
-          <img key={i} className={styles.node} src={n.art} alt="" decoding="async" loading={i === 0 ? 'eager' : 'lazy'}
-            style={{ left: `${n.x}%`, top: `${n.y}%`, width: n.s, height: n.s, animationDelay: `${i * -0.7}s` }} />
-        ))}
-        <img className={styles.runner} src={ICONS.flame} alt="" width="46" height="58" />
+      <div className={styles.glow} />
+      <div className={styles.dots} />
+      <div className={styles.brand}><BrandLogo size="md" /></div>
+
+      <div className={styles.stage}>
+        <span className={styles.orbit} />
+        <span className={`${styles.orbit} ${styles.orbit2}`}><i /></span>
+        <div className={styles.ringBox}><StreakRing intro total={7} done={3} value={3} /></div>
+        <img className={`${styles.fl} ${styles.cal}`} src={ICONS.stay} alt="" width="110" height="107" />
+        <img className={`${styles.fl} ${styles.gift}`} src={ICONS.exclusive} alt="" width="120" height="94" />
+        <img className={`${styles.fl} ${styles.coin}`} src={ICONS.coin} alt="" width="130" height="105" />
+        <img className={`${styles.fl} ${styles.crown}`} src={ICONS.topRight} alt="" width="330" height="190" />
       </div>
-      <img className={styles.mobileHero} src={ICONS.mobileHero} alt="" decoding="async" />
+
+      <div className={styles.copy}>
+        <h2 className={styles.head}>Keep the chain alive.</h2>
+        <p className={styles.sub}>Seven days. Bigger drops. One final vault.</p>
+        <div className={styles.bar}>{Array.from({ length: 7 }, (_, i) => <span key={i} style={{ '--i': i }} className={i < 4 ? styles.lit : ''} />)}</div>
+      </div>
     </section>
   );
 }

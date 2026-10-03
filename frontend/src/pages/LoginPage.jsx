@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Mail, Lock, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
 import styles from './LoginPage.module.css';
 import LoginVisual from '../components/auth/LoginVisual.jsx';
-import BrandLogo from '../components/BrandLogo.jsx';
 import friendlyError from '../utils/friendlyError.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,9 +53,9 @@ export default function LoginPage() {
       <LoginVisual />
       <main className={styles.panel}>
         <div className={styles.card}>
-          <div className={styles.logoRow}><BrandLogo size="lg" /></div>
-          <h1 className={styles.title}>{isLogin ? 'Welcome back.' : 'Start your streak today.'}</h1>
-          <p className={styles.subtitle}>{isLogin ? "Continue your streak. Collect what you've earned." : 'Create an account and turn consistency into rewards.'}</p>
+          <p className={styles.eyebrow}>{isLogin ? 'Sign in' : 'Create account'}</p>
+          <h1 className={styles.title}>{isLogin ? 'Welcome back.' : 'Start your chain.'}</h1>
+          <p className={styles.subtitle}>{isLogin ? 'Pick up where the chain left off.' : 'Create an account and turn consistency into rewards.'}</p>
 
           {error && <div className={styles.error} role="alert">{error}</div>}
 
@@ -64,19 +63,20 @@ export default function LoginPage() {
             {!isLogin && (
               <label className={styles.field}>
                 <span>Name</span>
-                <input className={styles.input} autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
+                <div className={styles.inputRow}><User size={18} /><input className={styles.input} autoComplete="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} /></div>
               </label>
             )}
             <label className={styles.field}>
               <span>Email</span>
-              <input className={styles.input} type="email" autoComplete="email" value={email} aria-invalid={touched.email && !!errors.email}
-                aria-describedby="err-email" onBlur={() => setTouched((t) => ({ ...t, email: true }))} onChange={(e) => setEmail(e.target.value)} />
+              <div className={styles.inputRow}><Mail size={18} /><input className={styles.input} type="email" autoComplete="email" placeholder="you@example.com" value={email} aria-invalid={touched.email && !!errors.email}
+                aria-describedby="err-email" onBlur={() => setTouched((t) => ({ ...t, email: true }))} onChange={(e) => setEmail(e.target.value)} /></div>
               <em id="err-email" className={styles.fieldError} role="alert">{touched.email ? errors.email : ''}</em>
             </label>
             <label className={styles.field}>
               <span>Password</span>
-              <div className={styles.pwWrap}>
-                <input className={styles.input} type={show ? 'text' : 'password'} autoComplete={isLogin ? 'current-password' : 'new-password'} value={password}
+              <div className={styles.inputRow}>
+                <Lock size={18} />
+                <input className={styles.input} placeholder="Your password" type={show ? 'text' : 'password'} autoComplete={isLogin ? 'current-password' : 'new-password'} value={password}
                   aria-invalid={touched.password && !!errors.password} aria-describedby="err-pw"
                   onBlur={() => setTouched((t) => ({ ...t, password: true }))} onChange={(e) => setPassword(e.target.value)} />
                 <button type="button" className={styles.eye} onClick={() => setShow(!show)} aria-label={show ? 'Hide password' : 'Show password'}>
@@ -89,9 +89,11 @@ export default function LoginPage() {
               {busy ? <><Loader2 size={18} className={styles.spin} /> Please wait…</> : isLogin ? 'Log in' : 'Sign up'}
             </button>
           </form>
-          <button className={styles.toggle} onClick={() => { setMode(isLogin ? 'register' : 'login'); setError(''); setTouched({}); }}>
-            {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Log in'}
-          </button>
+          <p className={styles.switch}>{isLogin ? 'New here? ' : 'Already have an account? '}
+            <button className={styles.toggle} onClick={() => { setMode(isLogin ? 'register' : 'login'); setError(''); setTouched({}); }}>
+              {isLogin ? 'Create an account' : 'Log in'}
+            </button>
+          </p>
         </div>
         <p className={styles.legal}>© 2026 VELoop</p>
       </main>

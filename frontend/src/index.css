@@ -3,7 +3,7 @@
    ========================================================================== */
 :root {
   /* brand palette */
-  --vl-bg: #080a1f;
+  --vl-bg: #07060d;
   --vl-bg-2: #0d1030;
   --vl-bg-3: #151a4a;
   --vl-violet-deep: #4c1d95;
@@ -31,7 +31,7 @@
 
 * { box-sizing: border-box; }
 
-html { background: #080a1f; }
+html { background: #07060d; }
 
 body {
   margin: 0;
@@ -43,7 +43,7 @@ body {
     radial-gradient(circle at 10% 20%, rgba(108, 59, 255, 0.22), transparent 30%),
     radial-gradient(circle at 85% 15%, rgba(255, 198, 46, 0.12), transparent 25%),
     radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.18), transparent 30%),
-    linear-gradient(160deg, #080a1f, #0d1030 55%, #151a4a);
+    linear-gradient(160deg, #07060d, #0a0814 60%, #120d26);
   background-attachment: fixed;
 }
 
@@ -91,9 +91,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   position: relative;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 44px; padding: 11px 24px;
-  border: none; border-radius: 14px; cursor: pointer;
+  border: none; border-radius: 999px; cursor: pointer;
   font-family: var(--vl-font-display); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
-  color: #1c0d00; background: var(--vl-fire);
+  color: #1c1200; background: linear-gradient(100deg, #ffe08a, #f0a92e);
   box-shadow: 0 0 0 1px rgba(255, 215, 90, 0.5), 0 8px 26px rgba(108, 59, 255, 0.4), 0 0 22px rgba(255, 198, 46, 0.32);
   transition: transform 0.18s var(--vl-ease), box-shadow 0.25s var(--vl-ease), filter 0.2s;
   overflow: hidden;

@@ -1,0 +1,21 @@
+.ring { position: relative; aspect-ratio: 1; width: 100%; }
+.lg { max-width: 430px; } .md { max-width: 300px; } .sm { max-width: 210px; }
+.svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.seg { fill: none; stroke: #241f3d; stroke-width: 20; stroke-linecap: round; }
+.on { stroke: url(#vlRingA); }
+.cur { stroke: #5a4a8f; }
+.intro .seg.on { animation: draw .5s ease-out both; animation-delay: calc(var(--i) * .22s + .3s); }
+@keyframes draw { from { stroke-dasharray: 0 100; opacity: 0; } }
+.core { position: absolute; inset: 12%; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #15112a, #07060f 70%); display: grid; place-content: center; justify-items: center; text-align: center; }
+.flame { position: absolute; top: -17%; width: 21%; height: auto; animation: breathe 3.2s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.05) translateY(-2px); } }
+.digits { font-family: var(--vl-font-display); font-weight: 800; line-height: 1; font-size: clamp(3.6rem, 18cqw, 7.4rem); letter-spacing: -.04em; margin-top: 14%; height: 1em; overflow: hidden; }
+.ring { container-type: inline-size; }
+.digits { font-size: 28cqw; }
+.sm .digits { font-size: 32cqw; }
+.roll { display: block; animation: roll 1.1s steps(3, jump-none) .3s both; }
+.roll i { display: block; font-style: normal; height: 1em; }
+@keyframes roll { from { transform: translateY(0); } to { transform: translateY(-66.666%); } }
+.label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 3.6cqw; letter-spacing: .28em; text-transform: uppercase; color: #9b97b8; margin-top: 2%; }
+.sub { margin-top: 5%; padding: 1.2cqw 3cqw; border-radius: 99px; background: #1b1735; color: #cbc6ee; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 3.2cqw; }
+@media (prefers-reduced-motion: reduce) { .flame, .roll, .intro .seg.on { animation: none; } .roll { transform: translateY(-66.666%); } }
