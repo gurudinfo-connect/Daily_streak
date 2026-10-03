@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { useOverview } from '../../context/OverviewContext.jsx';
 import { PageGate, CheckInButton, ActivityCard } from '../../components/widgets/Widgets.jsx';
 import StreakRing from '../../components/journey/StreakRing.jsx';
+import FinalVault from '../../components/journey/FinalVault.jsx';
 import StreakJourney from '../../components/journey/StreakJourney.jsx';
 import useCountdown from '../../hooks/useCountdown.js';
 import useCountUp from '../../hooks/useCountUp.js';
@@ -99,24 +100,25 @@ export default function DashboardPage() {
                 </dl>
               </div>
               <div className={styles.heroRing}>
-                <StreakRing total={streakData.streak.totalRewards} done={streakData.streak.checkedIn} value={n} sub={`Day ${String(streakData.streak.currentDay).padStart(2, '0')} / ${String(streakData.streak.totalRewards).padStart(2, '0')}`} />
+                <StreakRing intro total={streakData.streak.totalRewards} done={streakData.streak.checkedIn} value={n} sub={`Day ${String(streakData.streak.currentDay).padStart(2, '0')} / ${String(streakData.streak.totalRewards).padStart(2, '0')}`} />
                 <img className={`${styles.floatA}`} src={ICONS.stay} alt="" width="84" height="82" decoding="async" />
                 <img className={`${styles.floatB}`} src={ICONS.coin} alt="" width="80" height="64" decoding="async" />
               </div>
               <TodayReward streakData={streakData} />
             </header>
 
-            <div className={styles.grid}>
-              <h2 className={styles.trailTitle}>The trail</h2>
-              <section className={styles.journey} aria-label="The trail">
+            <section aria-labelledby="trail-h">
+              <h2 id="trail-h" className={styles.trailTitle}>The trail</h2>
+              <div className={styles.journey}>
                 <StreakJourney streakData={streakData} celebration={celebration} claiming={claiming} />
-              </section>
-              <aside className={styles.side}>
-                <WalletStrip dash={dash} />
-                <Progress dash={dash} streakData={streakData} />
-              </aside>
+              </div>
+            </section>
+            <div className={styles.pair}>
+              <WalletStrip dash={dash} />
+              <Progress dash={dash} streakData={streakData} />
             </div>
 
+            <FinalVault streakData={streakData} />
             <ActivityCard dash={dash} limit={4} showAll />
           </div>
         );

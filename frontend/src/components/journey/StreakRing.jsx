@@ -4,7 +4,7 @@ import { ICONS } from '../../assets/icons.js';
 
 // 7-segment progress ring. `done` and `total` come from the caller: the
 // dashboard passes backend values, the login page passes a decorative preview.
-function StreakRing({ total = 7, done = 0, value, label = 'days in', sub, size = 'lg', intro = false, flameSrc = ICONS.flame }) {
+function StreakRing({ total = 7, done = 0, value, label = 'days in', sub, size = 'lg', intro = false, roll = false, flameSrc = ICONS.flame }) {
   const gap = 2.2;
   const seg = 100 / total - gap;
   return (
@@ -22,7 +22,7 @@ function StreakRing({ total = 7, done = 0, value, label = 'days in', sub, size =
       <div className={styles.core}>
         <img className={styles.flame} src={flameSrc} alt="" width="84" height="104" />
         <div className={styles.digits}>
-          {intro ? <span className={styles.roll}><i>1</i><i>2</i><i>{value}</i></span> : <span>{value}</span>}
+          {roll ? <span className={styles.roll}><i>1</i><i>2</i><i>{value}</i></span> : <span>{value}</span>}
         </div>
         <div className={styles.label}>{label}</div>
         {sub && <div className={styles.sub}>{sub}</div>}

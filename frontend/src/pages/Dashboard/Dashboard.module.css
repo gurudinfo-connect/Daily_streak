@@ -2,7 +2,7 @@
 .kicker { margin: 0; color: var(--vl-text-dim); font-size: .92rem; font-weight: 600; }
 .hero { display: grid; grid-template-columns: 1fr minmax(260px, 400px) 330px; gap: 24px; align-items: center; }
 .heroLeft { min-width: 0; }
-.heroRing { position: relative; }
+.heroRing { position: relative; width: 100%; }
 .floatA { position: absolute; top: 2%; left: -2%; animation: float 5s ease-in-out infinite; }
 .floatB { position: absolute; bottom: 6%; right: -2%; animation: float 6s -2s ease-in-out infinite; }
 .mono { margin: 0; font: 500 .75rem 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; color: #8f8aab; }
@@ -48,3 +48,8 @@
 @media (max-width: 640px) { .hero { grid-template-columns: 1fr; } .heroRing { max-width: 300px; margin: 0 auto; order: -1; } }
 @media (max-width: 480px) { .page { padding: 16px 12px 40px; } .wallet { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .heroFlame, .todayArt { animation: none; } }
+
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; }
+.pair .wallet { grid-template-columns: 1fr; align-content: start; }
+@media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
+.page { max-width: 1400px; }

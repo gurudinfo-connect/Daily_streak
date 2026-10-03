@@ -10,7 +10,7 @@
   --vl-purple: #6d4aff;
   --vl-violet: #8b5cf6;
   --vl-gold: #ffc24a;
-  --vl-gold-soft: #ffd75a;
+  --vl-gold-soft: #ffc94d;
 
   /* legacy token names used across existing modules */
   --vl-bg-elevated: rgba(14, 18, 48, 0.62);
@@ -24,7 +24,7 @@
   --vl-font: 'Figtree', 'Segoe UI', system-ui, sans-serif;
   --vl-font-display: 'Bricolage Grotesque', 'Figtree', 'Segoe UI', system-ui, sans-serif;
 
-  --vl-glass: linear-gradient(150deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.015) 60%), rgba(14, 18, 48, 0.62);
+  --vl-glass: linear-gradient(160deg, rgba(74, 34, 122, 0.14), rgba(255, 255, 255, 0.01) 60%), #0e0b18;
   --vl-fire: linear-gradient(115deg, #ffd75a 0%, #ffc62e 55%, #ff9f1c 100%);
   --vl-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -60,8 +60,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   position: relative;
   border-radius: 22px;
   background: var(--vl-glass);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
   box-shadow: 0 12px 34px rgba(5, 2, 15, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition: transform 0.25s var(--vl-ease), box-shadow 0.25s var(--vl-ease);
 }
@@ -83,7 +81,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   transform: translateY(-3px);
   box-shadow: 0 20px 44px rgba(76, 29, 149, 0.38), 0 0 0 1px rgba(139, 92, 246, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
-.vl-card.vl-animborder::before { animation: vlBorder 9s linear infinite; }
+.vl-card.vl-animborder::before { animation: none; }
 @keyframes vlBorder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
 /* ---------- buttons ---------- */

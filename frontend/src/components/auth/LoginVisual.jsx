@@ -16,7 +16,7 @@ export default function LoginVisual() {
       <div className={styles.stage}>
         <span className={styles.orbit} />
         <span className={`${styles.orbit} ${styles.orbit2}`}><i /></span>
-        <div className={styles.ringBox}><StreakRing intro total={7} done={3} value={3} /></div>
+        <div className={styles.ringBox}><StreakRing intro roll total={7} done={3} value={3} /></div>
         <img className={`${styles.fl} ${styles.cal}`} src={ICONS.stay} alt="" width="110" height="107" />
         <img className={`${styles.fl} ${styles.gift}`} src={ICONS.exclusive} alt="" width="120" height="94" />
         <img className={`${styles.fl} ${styles.coin}`} src={ICONS.coin} alt="" width="130" height="105" />

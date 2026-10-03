@@ -1,0 +1,20 @@
+.vault { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; padding: 36px 40px; border-radius: 28px; border: 1px solid #2a2445; background: radial-gradient(60% 80% at 25% 50%, rgba(74, 34, 122, .45), transparent 70%), #0b0912; overflow: hidden; }
+.stage { position: relative; display: grid; place-items: center; min-height: 260px; }
+.halo { position: absolute; width: 78%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(245, 184, 46, .25); background: radial-gradient(circle, rgba(245, 184, 46, .14), transparent 65%); }
+.art { position: relative; width: min(360px, 80%); height: auto; object-fit: contain; animation: hover 6s ease-in-out infinite; }
+.gift { position: absolute; top: 4%; left: 12%; animation: hover 5s -1s ease-in-out infinite; }
+@keyframes hover { 50% { transform: translateY(-8px); } }
+.dim .art, .dim .gift { filter: saturate(.55) brightness(.75); }
+.kicker { margin: 0; font: 500 .75rem 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .18em; text-transform: uppercase; color: #8f8aab; }
+.title { margin: 6px 0 0; font-size: clamp(2.2rem, 4.5vw, 3.6rem); letter-spacing: -.05em; line-height: 1; }
+.amt { margin: 12px 0 0; font: 800 2.2rem var(--vl-font-display); color: var(--vl-gold-soft); }
+.sub { margin: 4px 0 0; color: #a9a4c4; }
+.progress { display: flex; align-items: baseline; gap: 10px; margin-top: 26px; }
+.progress strong { font: 800 3rem var(--vl-font-display); line-height: 1; font-variant-numeric: tabular-nums; }
+.progress span { color: #8f8aab; }
+.dots { display: flex; gap: 8px; margin-top: 12px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; background: #241f3d; }
+.dots .on { background: linear-gradient(135deg, #b49cff, #ffc94d); }
+.note { margin: 16px 0 0; display: flex; gap: 6px; align-items: center; color: #8f8aab; font-size: .9rem; }
+@media (max-width: 800px) { .vault { grid-template-columns: 1fr; padding: 24px 20px; gap: 12px; } .stage { min-height: 200px; } }
+@media (prefers-reduced-motion: reduce) { .art, .gift { animation: none; } }
