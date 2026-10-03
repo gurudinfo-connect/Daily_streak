@@ -1,42 +1,55 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import styles from './Welcome.module.css';
-import Walker from './Walker.jsx';
+import { ICONS } from '../../assets/icons.js';
 
-// Sunrise welcome: the sun climbs, the man walks in, plants a signpost whose flip-board shows the day.
-function Flap({ value }) {
-  return <span className={styles.flap}><i>{value}</i><b key={value}>{value}</b></span>;
-}
-
+// The day number is a glass vessel. Gold liquid rises to (day / total), coins drop in and ripple.
 function Welcome({ name, day, total, chain, banked, next, message }) {
+  const ref = useRef(null);
+  const frac = Math.min(1, Math.max(0, day / total));
+  const lvl = Math.round(212 - 190 * frac);
   const d = String(day).padStart(2, '0');
+  const move = (e) => {
+    const r = ref.current.getBoundingClientRect();
+    ref.current.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+    ref.current.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+  };
+  const wave = 'M0 0Q42.5 -16 85 0T170 0T255 0T340 0T425 0T510 0T595 0T680 0V400H0Z';
   return (
-    <section className={styles.scene} aria-label="Welcome">
-      <div className={styles.sun} />
-      {Array.from({ length: 14 }, (_, i) => <span key={i} className={styles.star} style={{ left: `${(i * 37) % 96 + 2}%`, top: `${(i * 23) % 40 + 4}%`, animationDelay: `${i * .3}s` }} />)}
-      <svg className={styles.hills} viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
-        <path className={styles.h1} d="M0 200V110Q100 40 220 100T450 80T700 90T800 70V200Z" />
-        <path className={styles.h2} d="M0 200V150Q150 110 300 150T600 140T800 130V200Z" />
-      </svg>
-      <div className={styles.ground}><span className={styles.dash} /></div>
+    <section ref={ref} onMouseMove={move} className={styles.scene} aria-label="Welcome">
+      <div className={styles.aurora} />
       <div className={styles.copy}>
-        <p className={styles.kicker}>Base camp</p>
-        <h1 className={styles.h}>Welcome back, {name}.</h1>
+        <h1 className={styles.h} aria-label={`Welcome back, ${name}.`}>
+          {`Welcome back, ${name}.`.split('').map((c, i) => <span key={i} aria-hidden="true" style={{ animationDelay: `${.15 + i * .04}s` }}>{c === ' ' ? '\u00a0' : c}</span>)}
+        </h1>
         <p className={styles.msg}>{message}</p>
+        <ol className={styles.pips} aria-label={`Stop ${day} of ${total}`}>
+          {Array.from({ length: total }, (_, i) => <li key={i} className={i < day - 1 ? styles.done : i === day - 1 ? styles.now : ''} style={{ animationDelay: `${1.6 + i * .12}s` }} />)}
+        </ol>
         <dl className={styles.facts}>
           <div><dt>Streak</dt><dd>{chain} days</dd></div>
           <div><dt>Backpack</dt><dd>{banked} VES</dd></div>
           {next && <div><dt>Next drop</dt><dd className={styles.gold}>{next}</dd></div>}
         </dl>
       </div>
-      <div className={styles.sign}>
-        <div className={styles.board} role="img" aria-label={`Stop ${d} of ${total}`}>
-          <span className={styles.stop}>Stop</span>
-          <Flap value={d[0]} /><Flap value={d[1]} />
-          <span className={styles.of}>of {total}</span>
-        </div>
-        <i className={styles.post} />
+      <div className={styles.vessel}>
+        <svg viewBox="0 0 360 250" className={styles.svg} role="img" aria-label={`Stop ${d} of ${total}`}>
+          <defs>
+            <linearGradient id="wvGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffe27a" /><stop offset="1" stopColor="#ff9a1f" /></linearGradient>
+            <clipPath id="wvClip"><text x="4" y="222" className={styles.num}>{d}</text></clipPath>
+          </defs>
+          <text x="4" y="222" className={styles.outline}>{d}</text>
+          <g clipPath="url(#wvClip)">
+            <rect width="360" height="250" fill="rgba(255,255,255,.05)" />
+            <g className={styles.liq} style={{ '--lvl': `${lvl}px` }}>
+              <path d={wave} className={styles.waveB} />
+              <path d={wave} className={styles.waveA} />
+              {[40, 95, 150, 215, 270, 310].map((x, i) => <circle key={x} cx={x} cy={150} r={3 + (i % 3)} className={styles.bub} style={{ animationDelay: `${i * .6}s` }} />)}
+            </g>
+          </g>
+          {[70, 160, 240].map((x, i) => <image key={x} href={ICONS.coin} x={x - 18} y="-30" width="36" height="30" className={styles.coin} style={{ '--lvl': `${lvl}px`, animationDelay: `${.9 + i * .55}s` }} />)}
+        </svg>
+        <span className={styles.of}>of {String(total).padStart(2, '0')} stops</span>
       </div>
-      <svg className={styles.man} viewBox="-30 -100 60 110" aria-hidden="true"><Walker walking speed={0.6} /></svg>
     </section>
   );
 }

@@ -53,3 +53,4 @@
 .pair .wallet { grid-template-columns: 1fr; align-content: start; }
 @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
 .page { max-width: 1400px; }
+.journey { background: transparent; border: 0; padding: 0; overflow: visible; }

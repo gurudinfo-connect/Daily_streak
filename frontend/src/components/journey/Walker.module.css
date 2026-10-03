@@ -13,3 +13,10 @@
 @keyframes lean { 50% { transform: rotate(3deg); } }
 @keyframes breathe { 50% { transform: translateY(-1.5px); } }
 @media (prefers-reduced-motion: reduce) { .body, .go .body, .go .legA, .go .legB, .go .arm, .go .torso { animation: none; } }
+.cape { transform-origin: -6px -60px; animation: flap 1.4s ease-in-out infinite; }
+.go .cape { animation-duration: .35s; }
+@keyframes flap { 50% { transform: skewY(-9deg) scaleX(1.12); } }
+.bulb { fill: #ffd86a; animation: blink 1.2s ease-in-out infinite; filter: drop-shadow(0 0 4px #ffd86a); }
+@keyframes blink { 50% { opacity: .35; } }
+.visor { fill: #4fe3ff; opacity: .9; animation: blink 3s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .cape, .bulb, .visor { animation: none; } }
