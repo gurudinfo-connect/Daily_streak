@@ -1,6 +1,6 @@
 // Pure geometry for the roadmap. Positions are layout only — every status,
 // amount and day still comes from the backend rewards[] array.
-export const DESKTOP = { w: 1000, h: 360 };
+export const DESKTOP = { w: 1000, h: 420 };
 export const MOBILE = { w: 360, h: 0 }; // height is computed from node count
 
 export function buildPoints(count, vertical) {
@@ -21,7 +21,7 @@ export function buildPoints(count, vertical) {
     h: DESKTOP.h,
     pts: Array.from({ length: total }, (_, i) => ({
       x: left + (span * i) / (total - 1),
-      y: DESKTOP.h / 2 + (i % 2 === 0 ? 62 : -62) + (i === total - 1 ? -10 : 0),
+      y: DESKTOP.h / 2 + 30 + (i % 2 === 0 ? 50 : -50) + (i === total - 1 ? -10 : 0),
     })),
   };
 }

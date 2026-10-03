@@ -1,0 +1,15 @@
+.w { --sp: .7s; }
+.shadow { fill: rgba(0,0,0,.4); }
+.legA, .legB, .arm { transform-origin: 0 0; }
+.torso { transform-origin: 0 -34px; }
+.body { animation: breathe 3s ease-in-out infinite; }
+.go .body { animation: step var(--sp) ease-in-out infinite; }
+.go .legA { animation: swing var(--sp) ease-in-out infinite; }
+.go .legB { animation: swing var(--sp) ease-in-out infinite reverse; }
+.go .arm { animation: swing var(--sp) ease-in-out infinite reverse; }
+.go .torso { animation: lean var(--sp) ease-in-out infinite; }
+@keyframes swing { 0%,100% { transform: rotate(-30deg); } 50% { transform: rotate(30deg); } }
+@keyframes step { 0%,50%,100% { transform: translateY(0); } 25%,75% { transform: translateY(-3px); } }
+@keyframes lean { 50% { transform: rotate(3deg); } }
+@keyframes breathe { 50% { transform: translateY(-1.5px); } }
+@media (prefers-reduced-motion: reduce) { .body, .go .body, .go .legA, .go .legB, .go .arm, .go .torso { animation: none; } }

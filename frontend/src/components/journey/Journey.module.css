@@ -1,51 +1,34 @@
 .stage { position: relative; width: 100%; contain: layout paint; }
-.svg { display: block; width: 100%; height: auto; max-height: 440px; overflow: visible; }
+.svg { display: block; width: 100%; height: auto; max-height: 520px; overflow: visible; }
 .vertical .svg { max-height: none; max-width: 420px; margin: 0 auto; }
-
-.road { fill: none; stroke-linecap: round; stroke-width: 10; }
-.done { stroke: #ffc24a; opacity: .95; }
-.now { stroke: #8f6bff; stroke-dasharray: 2 16; animation: flow 1.2s linear infinite; }
-.next { stroke: #2a2f55; stroke-dasharray: 2 14; }
-@keyframes flow { to { stroke-dashoffset: -18; } }
-
-.startDot { fill: #ffc24a; }
-.startText, .dayText { fill: #eef0ff; font: 700 15px 'Bricolage Grotesque', system-ui, sans-serif; }
-.amtText { fill: #a9b0d8; font: 600 13px 'Figtree', system-ui, sans-serif; }
-
+.star { fill: #fff; animation: tw 3s ease-in-out infinite; } @keyframes tw { 50% { opacity: .2; } }
+.moon { fill: #ffe9a8; filter: drop-shadow(0 0 14px #ffe9a8); }
+.cloud { fill: rgba(190,170,255,.18); animation: drift 38s linear infinite alternate; } @keyframes drift { to { transform: translateX(560px); } }
+.hillFar { fill: #20103f; } .hillNear { fill: #170b30; }
+.fly { fill: #ffd86a; filter: drop-shadow(0 0 5px #ffd86a); animation: fl 5s ease-in-out infinite; } @keyframes fl { 0%,100% { transform: translate(0,0); opacity: .2; } 50% { transform: translate(16px,-22px); opacity: 1; } }
+.roadBase { fill: none; stroke: #0b0818; stroke-width: 22; stroke-linecap: round; }
+.road { fill: none; stroke-linecap: round; stroke-width: 6; }
+.done { stroke: #ffc24a; stroke-dasharray: 100; animation: draw 1.4s calc(var(--i) * .35s) ease-out both; }
+@keyframes draw { from { stroke-dashoffset: 100; } }
+.now { stroke: #a58bff; stroke-dasharray: 1.5 5; animation: flow 1s linear infinite; } @keyframes flow { to { stroke-dashoffset: -13; } }
+.next { stroke: #3a3470; stroke-dasharray: 1.5 5; }
+.pole { stroke: #4a4380; stroke-width: 4; stroke-linecap: round; fill: none; }
+.flag { fill: #ffc24a; } .flagText { fill: #20140a; font: 800 12px 'Figtree', sans-serif; }
+.dayText { fill: #eef0ff; font: 700 15px 'Bricolage Grotesque', system-ui, sans-serif; }
+.amtText { fill: #b9bfe6; font: 600 13px 'Figtree', system-ui, sans-serif; }
+.signIn { animation: plant .7s cubic-bezier(.3,1.5,.5,1) both; } @keyframes plant { from { opacity: 0; transform: translateY(40px) scale(.5); } }
 .disc { fill: #11142e; stroke-width: 3; }
-.n_CLAIMED { stroke: #ffc24a; }
-.n_AVAILABLE { stroke: #b49cff; fill: #1b1850; }
-.n_TODAY { stroke: #6d4aff; }
-.n_LOCKED, .n_MISSED { stroke: #2a2f55; }
-.discUltimate { stroke: #ffc24a; fill: #1d1640; }
-.halo { fill: none; stroke: #8f6bff; stroke-width: 2; opacity: .6; transform-box: fill-box; transform-origin: center; animation: ring 2s ease-out infinite; }
-.haloGold { composes: halo; stroke: #ffc24a; }
-@keyframes ring { from { transform: scale(.92); opacity: .7; } to { transform: scale(1.18); opacity: 0; } }
-
-.art { transform-box: fill-box; transform-origin: center; }
-.artLocked { opacity: .35; filter: grayscale(1); }
-.artFloat { animation: float 2.6s ease-in-out infinite; }
-@keyframes float { 50% { transform: translateY(-4px); } }
-.artPop { animation: pop .9s cubic-bezier(.3,1.6,.5,1); }
-@keyframes pop { 0% { transform: scale(1); } 35% { transform: scale(1.28); } 100% { transform: scale(1); } }
-
-.tick { fill: #ffc24a; }
-.tickMark { fill: none; stroke: #20140a; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-.lockBadge { fill: #232850; }
-.lockMark { fill: none; stroke: #a9b0d8; stroke-width: 1.8; }
-
-.spark { fill: #ffc24a; opacity: 0; animation: burst .9s ease-out forwards; }
-@keyframes burst { 0% { transform: translate(0,0) scale(.4); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(1); opacity: 0; } }
-
-.char { transition: transform .9s cubic-bezier(.45,.05,.25,1); will-change: transform; }
-.charBob { animation: bob 2.4s ease-in-out infinite; transform-box: fill-box; }
-.charBusy .charBob { animation-duration: .5s; }
-@keyframes bob { 50% { transform: translateY(-5px); } }
-.shadow { fill: rgba(0,0,0,.35); }
-
+.n_CLAIMED { stroke: #ffc24a; } .n_AVAILABLE { stroke: #b49cff; fill: #1b1850; } .n_TODAY { stroke: #6d4aff; } .n_LOCKED, .n_MISSED { stroke: #2f3466; }
+.halo, .haloGold { fill: none; stroke: #8f6bff; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ring 2s ease-out infinite; }
+.haloGold { stroke: #ffc24a; } @keyframes ring { from { transform: scale(.92); opacity: .8; } to { transform: scale(1.22); opacity: 0; } }
+.art { transform-box: fill-box; transform-origin: center; } .artLocked { opacity: .35; filter: grayscale(1); }
+.artFloat { animation: fy 2.6s ease-in-out infinite; } @keyframes fy { 50% { transform: translateY(-4px); } }
+.artPop { animation: pop .9s cubic-bezier(.3,1.6,.5,1); } @keyframes pop { 35% { transform: scale(1.3); } }
+.tick { fill: #ffc24a; } .tickMark { fill: none; stroke: #20140a; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.lockBadge { fill: #232850; } .lockMark { fill: none; stroke: #a9b0d8; stroke-width: 1.8; }
+.spark { fill: #ffc24a; opacity: 0; animation: burst .9s ease-out forwards; } @keyframes burst { 0% { transform: scale(.4); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+.flyCoin { animation: toMan 1.1s ease-in forwards; } @keyframes toMan { to { transform: translate(0, 90px) scale(.4); opacity: 0; } }
+.plus { fill: #ffd86a; font: 800 18px 'Bricolage Grotesque', sans-serif; text-anchor: middle; animation: up 1.8s ease-out forwards; } @keyframes up { to { transform: translateY(-46px); opacity: 0; } }
+.busy { filter: drop-shadow(0 0 10px #ffc24a); }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-@media (prefers-reduced-motion: reduce) {
-  .char { transition: none; }
-  .now, .halo, .haloGold, .artFloat, .charBob { animation: none; }
-}
+@media (prefers-reduced-motion: reduce) { .done, .now, .halo, .haloGold, .artFloat, .signIn, .star, .fly, .cloud { animation: none; } }

@@ -4,7 +4,8 @@ import styles from './Dashboard.module.css';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useOverview } from '../../context/OverviewContext.jsx';
 import { PageGate, CheckInButton, ActivityCard } from '../../components/widgets/Widgets.jsx';
-import StreakRing from '../../components/journey/StreakRing.jsx';
+import Welcome from '../../components/journey/Welcome.jsx';
+import wel from '../../components/journey/Welcome.module.css';
 import FinalVault from '../../components/journey/FinalVault.jsx';
 import StreakJourney from '../../components/journey/StreakJourney.jsx';
 import useCountdown from '../../hooks/useCountdown.js';
@@ -25,12 +26,12 @@ function TodayReward({ streakData }) {
   const card = ci.card;
   const ready = ci.state === 'ready';
   return (
-    <section className={styles.today} aria-label="Today's reward">
+    <section className={styles.today} aria-label="Today's pickup">
       {card ? (
         <>
           <img className={styles.todayArt} src={getRewardIcon(card)} alt="" width="120" height="120" decoding="async" />
           <div className={styles.todayBody}>
-            <p className={styles.kicker}>{ready ? `Day ${card.day} is ready` : `Day ${card.day} unlocks in`}</p>
+            <p className={styles.kicker}>{ready ? `Stop ${card.day} is waiting` : `Stop ${card.day} opens in`}</p>
             <h2 className={styles.todayTitle}>{card.reward.title}</h2>
             <p className={styles.todayAmt}>{formatAmount(card.reward.currency, card.reward.amount)}</p>
             {!ready && ci.nextClaimAt && <p className={styles.todayTimer}><Countdown target={ci.nextClaimAt} /></p>}
@@ -51,11 +52,11 @@ function WalletStrip({ dash }) {
     <section className={styles.wallet} aria-label="Wallet">
       <div className={styles.wItem}>
         <img src={ICONS.coin} alt="" width="40" height="40" decoding="async" />
-        <div><span className={styles.wLabel}>VES balance</span><strong className={styles.wValue}>{ves}</strong></div>
+        <div><span className={styles.wLabel}>Backpack · VES</span><strong className={styles.wValue}>{ves}</strong></div>
       </div>
       <div className={styles.wItem}>
         <img src={ICONS.day5} alt="" width="40" height="40" decoding="async" />
-        <div><span className={styles.wLabel}>Gift card value</span><strong className={styles.wValue}>₹{dash.wallet.INR}</strong></div>
+        <div><span className={styles.wLabel}>Backpack · gift cards</span><strong className={styles.wValue}>₹{dash.wallet.INR}</strong></div>
       </div>
     </section>
   );
@@ -69,9 +70,9 @@ function Progress({ dash, streakData }) {
   return (
     <section className={styles.progress} aria-label="Progress">
       <dl>
-        <div><dt>Collected this cycle</dt><dd>{s.currentStreak} of {streakData.streak.totalRewards}</dd></div>
-        <div><dt>Best streak</dt><dd>{s.longestStreak} days</dd></div>
-        <div><dt>Next up</dt><dd>{next ? `Day ${next.day} · ${formatAmount(next.reward.currency, next.reward.amount)}` : 'Cycle complete'}</dd></div>
+        <div><dt>Stops reached</dt><dd>{s.currentStreak} of {streakData.streak.totalRewards}</dd></div>
+        <div><dt>Longest walk</dt><dd>{s.longestStreak} days</dd></div>
+        <div><dt>Next stop</dt><dd>{next ? `Stop ${next.day} · ${formatAmount(next.reward.currency, next.reward.amount)}` : 'Cycle complete'}</dd></div>
         {left !== null && <div><dt>{ultimate.reward.title}</dt><dd>{left === 0 ? 'Unlocked' : `${left} day${left === 1 ? '' : 's'} away`}</dd></div>}
       </dl>
     </section>
@@ -88,27 +89,14 @@ export default function DashboardPage() {
         const n = dash.streak.currentStreak;
         return (
           <div className={styles.page}>
-            <header className={styles.hero}>
-              <div className={styles.heroLeft}>
-                <p className={styles.mono}>Your streak</p>
-                <h1 className={styles.streakLine}><span className={styles.num}>{String(dash.streak.currentDay).padStart(2, '0')}</span><span className={styles.of}>/{String(streakData.streak.totalRewards).padStart(2, '0')}</span></h1>
-                <p className={styles.msg}>{streakMessage(n)}</p>
-                <dl className={styles.facts}>
-                  <div><dt>Chain</dt><dd>{n} days</dd></div>
-                  <div><dt>Banked</dt><dd>{dash.wallet.VES} VES</dd></div>
-                  {streakData.nextReward && <div><dt>Next unlock</dt><dd className={styles.gold}>{formatAmount(streakData.nextReward.currency, streakData.nextReward.amount)}</dd></div>}
-                </dl>
-              </div>
-              <div className={styles.heroRing}>
-                <StreakRing intro total={streakData.streak.totalRewards} done={streakData.streak.checkedIn} value={n} sub={`Day ${String(streakData.streak.currentDay).padStart(2, '0')} / ${String(streakData.streak.totalRewards).padStart(2, '0')}`} />
-                <img className={`${styles.floatA}`} src={ICONS.stay} alt="" width="84" height="82" decoding="async" />
-                <img className={`${styles.floatB}`} src={ICONS.coin} alt="" width="80" height="64" decoding="async" />
-              </div>
+            <header className={wel.row}>
+              <Welcome name={name} day={dash.streak.currentDay} total={streakData.streak.totalRewards} chain={n} banked={dash.wallet.VES} message={streakMessage(n)}
+                next={streakData.nextReward ? formatAmount(streakData.nextReward.currency, streakData.nextReward.amount) : null} />
               <TodayReward streakData={streakData} />
             </header>
 
-            <section aria-labelledby="trail-h">
-              <h2 id="trail-h" className={styles.trailTitle}>The trail</h2>
+            <section aria-labelledby="road-h">
+              <h2 id="road-h" className={styles.trailTitle}>Road to the Vault</h2>
               <div className={styles.journey}>
                 <StreakJourney streakData={streakData} celebration={celebration} claiming={claiming} />
               </div>
