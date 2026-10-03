@@ -4,8 +4,6 @@ import * as dashboardApi from '../services/dashboardApi';
 import * as streakApi from '../services/streakApi';
 import friendlyError from '../utils/friendlyError';
 import useServerClock from '../hooks/useServerClock';
-import CpaDemo from '../pages/DailyStreak/CpaDemo.jsx';
-import { ICONS, getRewardIcon } from '../assets/icons.js';
 import { getCheckInState } from '../utils/streakInsights';
 
 // One place that loads /dashboard + /daily-streak for the signed-in shell, so
@@ -93,10 +91,9 @@ export function OverviewProvider({ children }) {
 
   return (
     <OverviewContext.Provider
-      value={{ dash, streakData, loading, error, reload: load, now, checkIn, claiming, claimError, celebration }}
+      value={{ dash, streakData, loading, error, reload: load, now, checkIn, claiming, claimPhase, claimError, celebration }}
     >
       {children}
-      {claimPhase && <CpaDemo phase={claimPhase} icon={claimCard ? getRewardIcon(claimCard) : ICONS.coin} />}
     </OverviewContext.Provider>
   );
 }

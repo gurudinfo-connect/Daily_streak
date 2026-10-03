@@ -25,7 +25,7 @@
 .inlineError { margin: 10px 0; background: rgba(255, 90, 90, 0.12); border: 1px solid rgba(255, 90, 90, 0.4); color: #ffb3b3; border-radius: 12px; padding: 8px 12px; font-size: 0.82rem; }
 .skelStack { display: flex; flex-direction: column; gap: 14px; }
 .skelRow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.skel { border-radius: 22px; background: linear-gradient(90deg, rgba(30, 16, 58, 0.6) 25%, rgba(124, 58, 237, 0.2) 37%, rgba(30, 16, 58, 0.6) 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
+.skel { border-radius: 22px; background: linear-gradient(90deg, rgba(14, 18, 48, 0.6) 25%, rgba(124, 58, 237, 0.2) 37%, rgba(14, 18, 48, 0.6) 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
 
 /* welcome */
 .welcome { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
@@ -162,7 +162,7 @@
 .rTitle { font-size: 0.8rem; color: var(--vl-text-dim); } .rAmt { font-family: var(--vl-font-display); font-weight: 800; font-size: 1.2rem; }
 .rState { display: inline-flex; align-items: center; gap: 6px; margin-top: auto; font-size: 0.8rem; font-weight: 700; color: var(--vl-gold-soft); }
 .rLock { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; margin-top: auto; font-size: 0.78rem; color: var(--vl-text-dim); } .rLock > div { width: 100%; height: 6px; }
-.rUnlocked { background: linear-gradient(160deg, rgba(255, 198, 46, 0.16), rgba(108, 59, 255, 0.16) 70%), rgba(26, 13, 50, 0.7); box-shadow: 0 0 30px rgba(255, 198, 46, 0.16), 0 12px 34px rgba(5, 2, 15, 0.5); }
+.rUnlocked { background: linear-gradient(160deg, rgba(255, 198, 46, 0.16), rgba(108, 59, 255, 0.16) 70%), rgba(14, 18, 48, 0.7); box-shadow: 0 0 30px rgba(255, 198, 46, 0.16), 0 12px 34px rgba(5, 2, 15, 0.5); }
 .rUnlocked::after, .rReady::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.13) 50%, transparent 65%); transform: translateX(-120%); animation: shine 5s ease-in-out infinite; pointer-events: none; }
 .rReady { box-shadow: 0 0 34px rgba(255, 198, 46, 0.28); }
 .rLocked { background: rgba(14, 7, 28, 0.6); } .rLocked .rArt img { opacity: 0.5; filter: grayscale(0.7) brightness(0.8); }

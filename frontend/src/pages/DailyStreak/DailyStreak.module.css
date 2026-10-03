@@ -298,7 +298,7 @@
 .heroTitle { font-family: var(--vl-font-display); }
 
 .statCard, .card, .whyCard, .trustFooter {
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 60%), rgba(26, 13, 50, 0.62);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 60%), rgba(14, 18, 48, 0.62);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
   border: 1px solid rgba(139, 92, 246, 0.28); box-shadow: 0 12px 30px rgba(5, 2, 15, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: transform 0.25s var(--vl-ease), box-shadow 0.25s var(--vl-ease), border-color 0.25s;
@@ -308,7 +308,7 @@
 .statCard:hover, .card:hover, .whyCard:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(76, 29, 149, 0.35); border-color: rgba(167, 139, 250, 0.5); }
 .statValue { font-family: var(--vl-font-display); }
 .cardToday { border-color: rgba(255, 198, 46, 0.7); box-shadow: 0 0 30px rgba(255, 198, 46, 0.22), 0 12px 30px rgba(5, 2, 15, 0.45); }
-.cardClaimed { border-color: rgba(255, 198, 46, 0.45); background: linear-gradient(160deg, rgba(255, 198, 46, 0.12), rgba(108, 59, 255, 0.14)), rgba(26, 13, 50, 0.7); }
+.cardClaimed { border-color: rgba(255, 198, 46, 0.45); background: linear-gradient(160deg, rgba(255, 198, 46, 0.12), rgba(108, 59, 255, 0.14)), rgba(14, 18, 48, 0.7); }
 .cardClaimed::after, .cardToday::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.1) 50%, transparent 65%); transform: translateX(-120%); animation: cardShine 5.5s ease-in-out infinite; pointer-events: none; }
 @keyframes cardShine { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(120%); } }
 .cardBadgeClaimed { background: var(--vl-gold); color: #241300; }

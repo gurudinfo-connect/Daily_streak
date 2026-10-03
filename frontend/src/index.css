@@ -3,35 +3,35 @@
    ========================================================================== */
 :root {
   /* brand palette */
-  --vl-bg: #0b0618;
-  --vl-bg-2: #140b29;
-  --vl-bg-3: #241044;
+  --vl-bg: #080a1f;
+  --vl-bg-2: #0d1030;
+  --vl-bg-3: #151a4a;
   --vl-violet-deep: #4c1d95;
-  --vl-purple: #6c3bff;
+  --vl-purple: #6d4aff;
   --vl-violet: #8b5cf6;
-  --vl-gold: #ffc62e;
+  --vl-gold: #ffc24a;
   --vl-gold-soft: #ffd75a;
 
   /* legacy token names used across existing modules */
-  --vl-bg-elevated: rgba(30, 16, 58, 0.62);
+  --vl-bg-elevated: rgba(14, 18, 48, 0.62);
   --vl-purple-dark: #2b1665;
   --vl-purple-glow: rgba(124, 58, 237, 0.35);
   --vl-green: #22c55e;
   --vl-text: #f3eefb;
-  --vl-text-dim: #b8a9d9;
+  --vl-text-dim: #a9b0d8;
   --vl-border: rgba(255, 255, 255, 0.1);
 
-  --vl-font: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --vl-font-display: 'Sora', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --vl-font: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  --vl-font-display: 'Bricolage Grotesque', 'Figtree', 'Segoe UI', system-ui, sans-serif;
 
-  --vl-glass: linear-gradient(150deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.015) 60%), rgba(26, 13, 50, 0.62);
+  --vl-glass: linear-gradient(150deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.015) 60%), rgba(14, 18, 48, 0.62);
   --vl-fire: linear-gradient(115deg, #ffd75a 0%, #ffc62e 55%, #ff9f1c 100%);
   --vl-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 * { box-sizing: border-box; }
 
-html { background: #0b0618; }
+html { background: #080a1f; }
 
 body {
   margin: 0;
@@ -43,7 +43,7 @@ body {
     radial-gradient(circle at 10% 20%, rgba(108, 59, 255, 0.22), transparent 30%),
     radial-gradient(circle at 85% 15%, rgba(255, 198, 46, 0.12), transparent 25%),
     radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.18), transparent 30%),
-    linear-gradient(135deg, #0b0618, #140b29 45%, #241044);
+    linear-gradient(160deg, #080a1f, #0d1030 55%, #151a4a);
   background-attachment: fixed;
 }
 

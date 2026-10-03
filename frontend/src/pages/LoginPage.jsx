@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Flame, Gift, Trophy, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
 import styles from './LoginPage.module.css';
-import AnimatedBackground from '../components/AnimatedBackground.jsx';
+import LoginVisual from '../components/auth/LoginVisual.jsx';
 import BrandLogo from '../components/BrandLogo.jsx';
 import friendlyError from '../utils/friendlyError.js';
 
@@ -51,52 +51,50 @@ export default function LoginPage() {
 
   return (
     <div className={styles.wrap}>
-      <AnimatedBackground />
-      <div className={styles.card}>
-        <div className={styles.logoRow}><BrandLogo size="lg" center /></div>
-        <h1 className={styles.title}>{isLogin ? 'Welcome back.' : 'Start your streak today.'}</h1>
-        <p className={styles.subtitle}>{isLogin ? 'Keep the fire alive.' : 'Create an account and turn consistency into rewards.'}</p>
-        <div className={styles.perks} aria-hidden="true">
-          <span><Flame size={14} /> Streaks</span><span><Gift size={14} /> Rewards</span><span><Trophy size={14} /> Progress</span>
-        </div>
+      <LoginVisual />
+      <main className={styles.panel}>
+        <div className={styles.card}>
+          <div className={styles.logoRow}><BrandLogo size="lg" /></div>
+          <h1 className={styles.title}>{isLogin ? 'Welcome back.' : 'Start your streak today.'}</h1>
+          <p className={styles.subtitle}>{isLogin ? "Continue your streak. Collect what you've earned." : 'Create an account and turn consistency into rewards.'}</p>
 
-        {error && <div className={styles.error} role="alert">{error}</div>}
+          {error && <div className={styles.error} role="alert">{error}</div>}
 
-        <form onSubmit={submit} noValidate>
-          {!isLogin && (
+          <form onSubmit={submit} noValidate>
+            {!isLogin && (
+              <label className={styles.field}>
+                <span>Name</span>
+                <input className={styles.input} autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
+              </label>
+            )}
             <label className={styles.field}>
-              <span>Name</span>
-              <input className={styles.input} autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
+              <span>Email</span>
+              <input className={styles.input} type="email" autoComplete="email" value={email} aria-invalid={touched.email && !!errors.email}
+                aria-describedby="err-email" onBlur={() => setTouched((t) => ({ ...t, email: true }))} onChange={(e) => setEmail(e.target.value)} />
+              <em id="err-email" className={styles.fieldError} role="alert">{touched.email ? errors.email : ''}</em>
             </label>
-          )}
-          <label className={styles.field}>
-            <span>Email</span>
-            <input className={styles.input} type="email" autoComplete="email" value={email} aria-invalid={touched.email && !!errors.email}
-              aria-describedby="err-email" onBlur={() => setTouched((t) => ({ ...t, email: true }))} onChange={(e) => setEmail(e.target.value)} />
-            <em id="err-email" className={styles.fieldError} role="alert">{touched.email ? errors.email : ''}</em>
-          </label>
-          <label className={styles.field}>
-            <span>Password</span>
-            <div className={styles.pwWrap}>
-              <input className={styles.input} type={show ? 'text' : 'password'} autoComplete={isLogin ? 'current-password' : 'new-password'} value={password}
-                aria-invalid={touched.password && !!errors.password} aria-describedby="err-pw"
-                onBlur={() => setTouched((t) => ({ ...t, password: true }))} onChange={(e) => setPassword(e.target.value)} />
-              <button type="button" className={styles.eye} onClick={() => setShow(!show)} aria-label={show ? 'Hide password' : 'Show password'}>
-                {show ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-            <em id="err-pw" className={styles.fieldError} role="alert">{touched.password ? errors.password : ''}</em>
-          </label>
-          <button className={styles.submit} disabled={busy} type="submit">
-            {busy ? <><Loader2 size={18} className={styles.spin} /> Please wait…</> : isLogin ? 'Log In' : 'Sign Up'}
+            <label className={styles.field}>
+              <span>Password</span>
+              <div className={styles.pwWrap}>
+                <input className={styles.input} type={show ? 'text' : 'password'} autoComplete={isLogin ? 'current-password' : 'new-password'} value={password}
+                  aria-invalid={touched.password && !!errors.password} aria-describedby="err-pw"
+                  onBlur={() => setTouched((t) => ({ ...t, password: true }))} onChange={(e) => setPassword(e.target.value)} />
+                <button type="button" className={styles.eye} onClick={() => setShow(!show)} aria-label={show ? 'Hide password' : 'Show password'}>
+                  {show ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              <em id="err-pw" className={styles.fieldError} role="alert">{touched.password ? errors.password : ''}</em>
+            </label>
+            <button className={styles.submit} disabled={busy} type="submit">
+              {busy ? <><Loader2 size={18} className={styles.spin} /> Please wait…</> : isLogin ? 'Log in' : 'Sign up'}
+            </button>
+          </form>
+          <button className={styles.toggle} onClick={() => { setMode(isLogin ? 'register' : 'login'); setError(''); setTouched({}); }}>
+            {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Log in'}
           </button>
-        </form>
-        <button className={styles.toggle} onClick={() => { setMode(isLogin ? 'register' : 'login'); setError(''); setTouched({}); }}>
-          {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Log in'}
-        </button>
-        <p className={styles.tagline}>Build your streak. Earn your rewards.</p>
-      </div>
-      <p className={styles.legal}>© 2026 VELoop</p>
+        </div>
+        <p className={styles.legal}>© 2026 VELoop</p>
+      </main>
     </div>
   );
 }
