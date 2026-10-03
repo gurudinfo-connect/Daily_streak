@@ -14,7 +14,7 @@ export default function FinalVault({ streakData }) {
   const state = card.status; // CLAIMED | AVAILABLE | TODAY | LOCKED
   const locked = state === 'LOCKED';
   return (
-    <section className={`${styles.vault} ${locked ? styles.dim : ''}`} aria-label="Final vault">
+    <section className={`${styles.vault} ${locked ? styles.dim : ''}`} aria-label="Grand prize">
       <div className={styles.stage}>
         <span className={styles.halo} aria-hidden="true" />
         <img className={styles.art} src={ICONS.day7} alt="" width="360" height="293" loading="lazy" decoding="async" />
@@ -22,7 +22,7 @@ export default function FinalVault({ streakData }) {
       </div>
       <div className={styles.info}>
         <p className={styles.kicker}>Day {card.day} · destination</p>
-        <h2 className={styles.title}>Final vault</h2>
+        <h2 className={styles.title}>Grand prize</h2>
         <p className={styles.amt}>{formatAmount(card.reward.currency, card.reward.amount)}</p>
         <p className={styles.sub}>{card.reward.subtitle || card.reward.title}</p>
         <div className={styles.progress}>

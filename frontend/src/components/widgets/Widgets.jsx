@@ -296,14 +296,14 @@ export function MilestonesCard({ dash, full = false }) {
 }
 
 /* ---------- activity ---------- */
-export function ActivityCard({ dash, limit = 5, showAll = false }) {
+export function ActivityCard({ dash, limit = 5, showAll = false, title = "Recent activity" }) {
   const navigate = useNavigate();
   const items = buildActivity(dash.recent, dash.streak.cycleLength);
   const shown = items.slice(0, limit);
   const iconFor = (k) => (k === 'gift' ? <Gift size={16} /> : k === 'cycle' ? <Trophy size={16} /> : <Flame size={16} />);
   return (
     <Card className={styles.activity}>
-      <CardHead title="Recent activity" icon={null} />
+      <CardHead title={title} icon={null} />
       {shown.length === 0 ? (
         <div className={styles.empty}>No activity yet. Your first check-in will show up here.</div>
       ) : (

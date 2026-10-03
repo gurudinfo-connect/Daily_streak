@@ -126,7 +126,7 @@ function Shell() {
           <div className={styles.crumb}><span>VELoop</span><span aria-hidden="true">/</span><strong>{title}</strong></div>
           <div className={styles.right} ref={menuRef}>
             <span className={styles.pill} title="Current streak"><img src={ICONS.flame} alt="" width="14" height="17" /><b>{streak}</b><span className={styles.pillTxt}> days</span></span>
-            <span className={styles.pill} title="VES balance"><img src={ICONS.coin} alt="" width="18" height="15" /><b>{dash?.wallet?.VES ?? 0}</b></span>
+            <span className={styles.pill} title="VES balance" data-wallet><img src={ICONS.coin} alt="" width="18" height="15" /><b>{dash?.wallet?.VES ?? 0}</b></span>
             <div className={styles.menuWrap}>
               <button className={styles.iconBtn} aria-label="Notifications" aria-haspopup="dialog" aria-expanded={open === 'bell'} onClick={() => setOpen(open === 'bell' ? null : 'bell')}>
                 <Bell size={17} />{ready && <span className={styles.dot} aria-hidden="true" />}

@@ -1,0 +1,32 @@
+.chain { width: 100%; max-width: 640px; }
+.svg { display: block; width: 100%; height: auto; overflow: visible; }
+.rail { stroke: #1a1630; stroke-width: 2; stroke-dasharray: 2 8; }
+.drop { animation: drop .7s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes drop { from { transform: translateY(-70px); opacity: 0; } }
+.link { fill: none; stroke: #2c2748; stroke-width: 9; }
+.lit { animation: ignite .4s ease-out both; }
+@keyframes ignite { from { stroke: #2c2748; } 60% { stroke: #fff2b8; } to { stroke: #ffc94d; } }
+.lit { stroke: #ffc94d; }
+.glow { fill: none; stroke: #ffc94d; stroke-width: 18; opacity: 0; animation: glowIn .5s ease-out both; }
+@keyframes glowIn { to { opacity: .16; } }
+.cur { stroke: #b49cff; animation: curPulse 1.8s ease-in-out infinite; }
+@keyframes curPulse { 50% { stroke: #7a5cff; opacity: .55; } }
+.num { fill: #5d5877; font: 600 12px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .08em; }
+.numOn { fill: #ffc94d; }
+.spark { fill: #fff2b8; opacity: 0; animation: travel 1s .95s ease-in-out both; }
+@keyframes travel { 0% { transform: translateX(0); opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(var(--end)); opacity: 0; } }
+.head { opacity: 0; animation: headIn .5s cubic-bezier(.3, 1.6, .5, 1) both; transform-box: fill-box; }
+@keyframes headIn { from { opacity: 0; scale: .3; } to { opacity: 1; scale: 1; } }
+.flame { animation: flick 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; }
+@keyframes flick { 50% { transform: scale(1.07) rotate(-2deg); } }
+
+.reel { display: inline-flex; font-family: var(--vl-font-display); font-weight: 800; font-size: clamp(6rem, 15vw, 11rem); line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; color: #ffc94d; }
+.slot { display: block; height: 1em; overflow: hidden; }
+.col { display: block; animation: spin 1.5s cubic-bezier(.15, .85, .2, 1) both; }
+.col i { display: block; height: 1em; font-style: normal; }
+@keyframes spin { from { transform: translateY(0); } to { transform: translateY(calc(var(--n) * -1em)); } }
+@media (prefers-reduced-motion: reduce) {
+  .drop, .lit, .glow, .cur, .spark, .head, .flame { animation: none; }
+  .head, .glow { opacity: 1; } .glow { opacity: .16; } .spark { display: none; }
+  .col { animation: none; transform: translateY(calc(var(--n) * -1em)); }
+}
