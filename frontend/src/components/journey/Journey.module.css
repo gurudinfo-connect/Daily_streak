@@ -1,20 +1,23 @@
-.stage { position: relative; width: 100%; padding: 8px 8px 0; }
+.stage { position: relative; width: 100%; padding: 8px 8px 0; contain: layout paint; }
+.canvas { position: relative; width: 100%; }
+.vertical .canvas { max-width: 420px; margin: 0 auto; }
+.svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.overlay { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.haloWrap { position: absolute; width: calc(var(--hs) * 1px * var(--s)); height: calc(var(--hs) * 1px * var(--s)); translate: -50% -50%; }
+.haloRing { position: absolute; inset: 0; border-radius: 50%; border: 2px solid #b49cff; animation: ring 2s ease-out infinite; will-change: transform, opacity; }
+.comet { position: absolute; left: 0; top: 14%; width: 120px; height: 2px; background: linear-gradient(90deg, transparent, #cfc8ff); opacity: 0; transform: translate3d(-140px, 0, 0) rotate(18deg); animation: comet 9s linear infinite; will-change: transform, opacity; }
+.comet2 { top: 34%; animation-delay: 4.5s; animation-duration: 11s; }
+@keyframes comet { 0% { opacity: 0; transform: translate3d(-140px, 0, 0) rotate(18deg); } 6% { opacity: .9; } 40% { opacity: 0; transform: translate3d(70vw, 160px, 0) rotate(18deg); } 100% { opacity: 0; transform: translate3d(70vw, 160px, 0) rotate(18deg); } }
 .head { display: flex; justify-content: flex-end; padding: 0 12px; }
 .count { font: 500 .8rem 'JetBrains Mono', ui-monospace, monospace; color: #8f8aab; }
 .count b { color: #62d9ff; }
-.svg { display: block; width: 100%; height: auto; overflow: visible; }
-.vertical .svg { max-width: 420px; margin: 0 auto; }
 
-.star { fill: #cfc8ff; opacity: .5; animation: twinkle 4s ease-in-out infinite; }
-@keyframes twinkle { 50% { opacity: .1; } }
-.planet { animation: drift 14s ease-in-out infinite; }
-@keyframes drift { 50% { transform: translateY(8px); } }
-
+.star { fill: #cfc8ff; opacity: .45; }
 .roadEdge, .roadBed, .energy, .trail, .trailGlow { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .roadEdge { stroke: #3b2f70; stroke-width: 34; stroke-dasharray: 1 1; animation: reveal 1.4s .1s ease-out both; }
 .roadBed { stroke: #181331; stroke-width: 26; stroke-dasharray: 1 1; animation: reveal 1.4s .1s ease-out both; }
 @keyframes reveal { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-.energy { stroke: #7a5cff; stroke-width: 3; stroke-dasharray: 3 16; opacity: .55; animation: flow 1.1s linear infinite; }
+.energy { stroke: #7a5cff; stroke-width: 3; stroke-dasharray: 3 16; opacity: .5; }
 @keyframes flow { to { stroke-dashoffset: -19; } }
 .trailGlow { stroke: #ffc94d; stroke-width: 22; opacity: .12; }
 .trail { stroke: #ffc94d; stroke-width: 6; }
@@ -28,7 +31,7 @@
 .node { cursor: pointer; outline: none; }
 .node:focus-visible .disc { stroke: #fff; stroke-width: 4; }
 .node:hover .floatArt { transform: scale(1.06); }
-.floatArt { transform-box: fill-box; transform-origin: center; animation: bobArt 4.2s ease-in-out infinite; transition: transform .2s; }
+.floatArt { transform-box: fill-box; transform-origin: center; transition: transform .2s; }
 .slow { animation-duration: 6s; }
 @keyframes bobArt { 50% { transform: translateY(-4px); } }
 
@@ -40,7 +43,7 @@
 .picked .disc { stroke-width: 5; }
 .halo { fill: none; stroke: #b49cff; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ring 2s ease-out infinite; }
 @keyframes ring { from { transform: scale(.9); opacity: .8; } to { transform: scale(1.22); opacity: 0; } }
-.rays { fill: none; stroke: #ffc94d; stroke-width: 2; stroke-dasharray: 3 12; opacity: .7; transform-box: fill-box; transform-origin: center; animation: spin 30s linear infinite; }
+.rays { fill: none; stroke: #ffc94d; stroke-width: 2; stroke-dasharray: 3 12; opacity: .7; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .dimGlow { opacity: .4; }
 
@@ -56,15 +59,16 @@
 .spark { fill: #ffc94d; opacity: 0; animation: burst .9s ease-out forwards; }
 @keyframes burst { 0% { transform: translate(0, 0) scale(.4); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(1.1); opacity: 0; } }
 
-.char { pointer-events: none; }
-.bob { animation: bob 2.4s ease-in-out infinite; transform-box: fill-box; }
+.char { position: absolute; left: 0; top: 0; width: calc(52px * var(--s)); height: calc(64px * var(--s)); margin: calc(-74px * var(--s)) 0 0 calc(-26px * var(--s)); will-change: transform; }
+.char::after { content: ''; position: absolute; left: 50%; bottom: calc(-12px * var(--s)); width: calc(36px * var(--s)); height: calc(9px * var(--s)); translate: -50% 0; border-radius: 50%; background: rgba(0, 0, 0, .45); }
+.bob { width: 100%; height: 100%; animation: bob 2.4s ease-in-out infinite; will-change: transform; }
+.bob img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .walking .bob { animation: run .38s ease-in-out infinite; }
 .busy .bob { animation-duration: .5s; }
 .settle .bob { animation: settle .55s ease-out; }
-@keyframes bob { 50% { transform: translateY(-6px); } }
-@keyframes run { 50% { transform: translateY(-9px) rotate(5deg); } }
-@keyframes settle { 30% { transform: translateY(-14px) scale(1.08); } 60% { transform: translateY(0) scale(.96); } }
-.shadow { fill: rgba(0, 0, 0, .45); }
+@keyframes bob { 50% { transform: translateY(calc(-6px * var(--s))); } }
+@keyframes run { 50% { transform: translateY(calc(-9px * var(--s))) rotate(5deg); } }
+@keyframes settle { 30% { transform: translateY(calc(-14px * var(--s))) scale(1.08); } 60% { transform: translateY(0) scale(.96); } }
 
 .detail { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; margin: 6px 4px 0; padding: 14px 18px; border-top: 1px solid #1d1a30; }
 .detail img { object-fit: contain; }
@@ -80,5 +84,5 @@
 @media (max-width: 560px) { .detail { grid-template-columns: auto 1fr; } .dBadge { grid-column: 1 / -1; justify-self: start; } .dAmt { font-size: 1.5rem; } }
 @media (prefers-reduced-motion: reduce) {
   .roadEdge, .roadBed, .pop { animation: none; }
-  .energy, .star, .planet, .halo, .rays, .floatArt, .bob, .chipBounce { animation: none; }
+  .haloRing, .bob, .comet { animation: none; }
 }

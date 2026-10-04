@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { prefetchPages } from '../routes.js';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Flame, Trophy, Bell, ChevronDown, LogOut, Gift, Menu, X,
@@ -69,6 +70,10 @@ function Shell() {
   const streak = dash?.streak?.currentStreak ?? 0;
 
   useEffect(() => { setOpen(null); setDrawer(false); }, [pathname]);
+  useEffect(() => { // warm the other page chunks once the browser is idle
+    const id = (window.requestIdleCallback || ((f) => setTimeout(f, 1500)))(prefetchPages);
+    return () => (window.cancelIdleCallback ? window.cancelIdleCallback(id) : clearTimeout(id));
+  }, []);
   useEffect(() => {
     const out = (e) => menuRef.current && !menuRef.current.contains(e.target) && setOpen(null);
     const esc = (e) => { if (e.key === 'Escape') { setOpen(null); setDrawer(false); setPinned(false); } };
@@ -166,7 +171,7 @@ function Shell() {
           </div>
         </header>
 
-        <main key={pathname} className={styles.main}><Outlet /></main>
+        <main key={pathname} className={styles.main}><Suspense fallback={<div className={styles.fallback} aria-busy="true" />}><Outlet /></Suspense></main>
         <footer className={styles.footer}><img src={fireLogo} alt="" width="16" height="16" /> VELoop — Daily Streak · Build your streak. Earn your rewards. · © 2026 VELoop</footer>
       </div>
 

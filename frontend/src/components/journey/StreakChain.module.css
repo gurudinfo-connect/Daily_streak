@@ -9,7 +9,7 @@
 .lit { stroke: #ffc94d; }
 .glow { fill: none; stroke: #ffc94d; stroke-width: 18; opacity: 0; animation: glowIn .5s ease-out both; }
 @keyframes glowIn { to { opacity: .16; } }
-.cur { stroke: #b49cff; animation: curPulse 1.8s ease-in-out infinite; }
+.cur { stroke: #b49cff; animation: curPulse 1.8s ease-in-out 4; }
 @keyframes curPulse { 50% { stroke: #7a5cff; opacity: .55; } }
 .num { fill: #5d5877; font: 600 12px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .08em; }
 .numOn { fill: #ffc94d; }
@@ -17,7 +17,7 @@
 @keyframes travel { 0% { transform: translateX(0); opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(var(--end)); opacity: 0; } }
 .head { opacity: 0; animation: headIn .5s cubic-bezier(.3, 1.6, .5, 1) both; transform-box: fill-box; }
 @keyframes headIn { from { opacity: 0; scale: .3; } to { opacity: 1; scale: 1; } }
-.flame { animation: flick 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; }
+.flame { animation: flick 2.4s ease-in-out 3; transform-box: fill-box; transform-origin: 50% 90%; }
 @keyframes flick { 50% { transform: scale(1.07) rotate(-2deg); } }
 
 .reel { display: inline-flex; font-family: var(--vl-font-display); font-weight: 800; font-size: clamp(6rem, 15vw, 11rem); line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; color: #ffc94d; }

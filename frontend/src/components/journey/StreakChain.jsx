@@ -3,7 +3,7 @@ import styles from './StreakChain.module.css';
 import { ICONS } from '../../assets/icons.js';
 
 // Rolling odometer: every digit is a reel that spins up from 0 to its value.
-export function Reel({ value }) {
+export const Reel = memo(function Reel({ value }) {
   const digits = String(Math.max(0, value)).split('').map(Number);
   return (
     <span className={styles.reel} role="img" aria-label={String(value)}>
@@ -16,7 +16,7 @@ export function Reel({ value }) {
       ))}
     </span>
   );
-}
+});
 
 // 7 interlocking links that drop in and then ignite one by one.
 // `done` / `total` are passed straight from the backend response.

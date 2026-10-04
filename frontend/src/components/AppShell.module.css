@@ -1,4 +1,4 @@
-.shell { --rail: 72px; position: relative; min-height: 100vh; background: radial-gradient(60% 40% at 80% 100%, rgba(74, 34, 122, .32), transparent 70%), radial-gradient(40% 30% at 10% 0, rgba(50, 21, 104, .22), transparent 70%), #08080d; }
+.shell { --rail: 72px; position: relative; min-height: 100vh; }
 .frame { margin-left: var(--rail); min-height: 100vh; display: flex; flex-direction: column; min-width: 0; }
 
 /* ---- rail ---- */
@@ -60,6 +60,7 @@
 .gold { color: #2a1200; background: linear-gradient(135deg, #ffe08a, #f0a92e); }
 .violet { color: #d8ccff; background: rgba(139, 92, 246, .25); }
 
+.fallback { min-height: 60vh; }
 .main { flex: 1; min-width: 0; animation: page .2s ease-out; }
 @keyframes page { from { opacity: 0; transform: translateY(6px); } }
 .footer { padding: 22px 24px 28px; text-align: center; font-size: .78rem; color: #4d4968; display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; }

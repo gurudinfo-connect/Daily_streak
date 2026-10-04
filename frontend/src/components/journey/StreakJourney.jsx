@@ -5,6 +5,8 @@ import { ICONS, getRewardIcon } from '../../assets/icons.js';
 import useMediaQuery from '../../hooks/useMediaQuery.js';
 import { buildGeo, STARS } from './journeyLayout.js';
 import { formatAmount } from '../../utils/streakInsights';
+import useLite from '../../hooks/useLite.js';
+import usePauseOffscreen from '../../hooks/usePauseOffscreen.js';
 
 const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -33,6 +35,11 @@ function StreakJourney({ streakData, celebration, claiming }) {
   const charRef = useRef(null);
   const trailRef = useRef(null);
   const glowRef = useRef(null);
+  const canvasRef = useRef(null);
+  const stageRef = useRef(null);
+  const scaleRef = useRef(1);
+  const lite = useLite();
+  usePauseOffscreen(stageRef);
   const nodeEls = useRef({});
   const posRef = useRef(null);
   const rafRef = useRef(0);
@@ -40,6 +47,25 @@ function StreakJourney({ streakData, celebration, claiming }) {
   const [picked, setPicked] = useState(null);
   const [burstDay, setBurstDay] = useState(null);
   const idx = rewards.length ? currentIndex(rewards, streakData.streak.currentDay) : 0;
+
+  // px-per-viewBox-unit, kept in a CSS variable so overlay layers scale with the map.
+  useLayoutEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return undefined;
+    const apply = () => {
+      const sc = el.clientWidth / geo.w;
+      scaleRef.current = sc;
+      el.style.setProperty('--s', String(sc));
+      if (posRef.current !== null && pathRef.current && charRef.current) {
+        const p = pathRef.current.getPointAtLength(posRef.current);
+        charRef.current.style.transform = `translate3d(${p.x * sc}px, ${p.y * sc}px, 0)`;
+      }
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [geo.w]);
 
   // Measure where each node sits along the single road path (once per layout).
   useLayoutEffect(() => {
@@ -65,10 +91,11 @@ function StreakJourney({ streakData, celebration, claiming }) {
   useEffect(() => {
     if (!m) return undefined;
     const path = pathRef.current, char = charRef.current, trail = trailRef.current, glow = glowRef.current;
-    const target = Math.max(0, m.nodes[Math.min(idx, m.nodes.length - 1)] - (idx === 0 ? 0 : (rewards[idx - 1]?.isUltimate ? 104 : 88)));
+    const target = Math.max(0, m.nodes[Math.min(idx, m.nodes.length - 1)] - (idx === 0 ? 0 : (rewards[idx - 1]?.isUltimate ? (vertical ? 118 : 104) : (vertical ? 100 : 88))));
     const draw = (d) => {
       const p = path.getPointAtLength(d);
-      char.setAttribute('transform', `translate(${p.x} ${p.y})`);
+      char.style.opacity = '1';
+      char.style.transform = `translate3d(${p.x * scaleRef.current}px, ${p.y * scaleRef.current}px, 0)`;
       const dash = `${d} ${m.total + 10}`;
       trail.setAttribute('stroke-dasharray', dash); glow.setAttribute('stroke-dasharray', dash);
     };
@@ -88,7 +115,7 @@ function StreakJourney({ streakData, celebration, claiming }) {
     draw(from);
     rafRef.current = requestAnimationFrame(tick);
     return () => { cancelAnimationFrame(rafRef.current); char.classList.remove(styles.walking); };
-  }, [m, idx]);
+  }, [m, idx, vertical]);
 
   // Celebration only runs after the backend confirmed the claim (celebration comes from the claim response).
   useEffect(() => {
@@ -124,10 +151,12 @@ function StreakJourney({ streakData, celebration, claiming }) {
   const doneCount = rewards.filter((r) => r.status === 'CLAIMED').length;
 
   return (
-    <div className={`${styles.stage} ${vertical ? styles.vertical : ''}`}>
+    <div ref={stageRef} className={`${styles.stage} ${vertical ? styles.vertical : ''}`}>
       <div className={styles.head}>
         <span className={styles.count}><b>{String(doneCount).padStart(2, '0')}</b> of {String(rewards.length).padStart(2, '0')} secured</span>
       </div>
+      <div ref={canvasRef} className={styles.canvas} style={{ aspectRatio: `${geo.w} / ${geo.h}` }}>
+      {!lite && !vertical && <><span className={styles.comet} aria-hidden="true" /><span className={`${styles.comet} ${styles.comet2}`} aria-hidden="true" /></>}
       <svg className={styles.svg} viewBox={`0 0 ${geo.w} ${geo.h}`} role="group" aria-label="Reward road" preserveAspectRatio="xMidYMid meet">
         <defs>
           <radialGradient id="vlGlow"><stop offset="0" stopColor="#ffc94d" stopOpacity=".35" /><stop offset="1" stopColor="#ffc94d" stopOpacity="0" /></radialGradient>
@@ -136,9 +165,9 @@ function StreakJourney({ streakData, celebration, claiming }) {
 
         <g className={styles.decor} aria-hidden="true">
           {!vertical && <><path d={`M0 ${geo.h} L0 ${geo.h - 90} L170 ${geo.h - 170} L320 ${geo.h - 100} L520 ${geo.h - 200} L760 ${geo.h - 90} L930 ${geo.h - 150} L${geo.w} ${geo.h - 80} L${geo.w} ${geo.h}Z`} fill="url(#vlHill)" />
-            <g className={styles.planet}><circle cx="150" cy="80" r="26" fill="#3b2275" /><ellipse cx="150" cy="80" rx="46" ry="9" fill="none" stroke="#6b4bd0" strokeWidth="2" transform="rotate(-18 150 80)" /></g></>}
+            <g><circle cx="150" cy="80" r="26" fill="#3b2275" /><ellipse cx="150" cy="80" rx="46" ry="9" fill="none" stroke="#6b4bd0" strokeWidth="2" transform="rotate(-18 150 80)" /></g></>}
           {STARS.map((s, i) => (
-            <circle key={i} cx={(s.x / 100) * geo.w} cy={(s.y / 100) * geo.h} r={s.r} className={styles.star} style={{ animationDelay: `${s.d}s` }} />
+            <circle key={i} cx={(s.x / 100) * geo.w} cy={(s.y / 100) * geo.h} r={s.r} className={styles.star} />
           ))}
         </g>
 
@@ -160,9 +189,9 @@ function StreakJourney({ streakData, celebration, claiming }) {
           const st = r.status;
           const hot = st === 'AVAILABLE';
           const side = vertical ? (p.x < geo.w / 2 ? 'r' : 'l') : 'b';
-          const lx = side === 'r' ? size / 2 + 14 : side === 'l' ? -size / 2 - 14 : 0;
+          const lx = side === 'r' ? size / 2 + 14 : side === 'l' ? -size / 2 - 34 : 0;
           const anchor = side === 'r' ? 'start' : side === 'l' ? 'end' : 'middle';
-          const ly = side === 'b' ? size / 2 + 26 : -2;
+          const ly = side === 'b' ? size / 2 + 26 : -16;
           const label = `Day ${r.day}: ${r.reward.title}, ${formatAmount(r.reward.currency, r.reward.amount)}, ${statusText(r)}`;
           return (
             <g key={r.day} transform={`translate(${p.x} ${p.y})`}>
@@ -172,9 +201,8 @@ function StreakJourney({ streakData, celebration, claiming }) {
                   onClick={() => setPicked(r.day)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPicked(r.day); } }}>
                   {(st === 'CLAIMED' || hot || r.isUltimate) && <circle r={size * 0.95} fill="url(#vlGlow)" className={st === 'LOCKED' ? styles.dimGlow : ''} />}
                   {r.isUltimate && <circle r={size / 2 + 12} className={styles.rays} />}
-                  {hot && <circle r={size / 2 + 6} className={styles.halo} />}
                   <circle r={size / 2 - 3} className={`${styles.disc} ${styles['n_' + st]}`} />
-                  <g className={`${styles.floatArt} ${st === 'LOCKED' ? styles.slow : ''}`}>
+                  <g className={styles.floatArt}>
                     <image href={getRewardIcon(r)} x={-size / 2 + 8} y={-size / 2 + 8} width={size - 16} height={size - 16} preserveAspectRatio="xMidYMid meet"
                       className={`${st === 'LOCKED' ? styles.artLocked : ''} ${burstDay === r.day ? styles.artPop : ''}`} />
                   </g>
@@ -183,7 +211,7 @@ function StreakJourney({ streakData, celebration, claiming }) {
                   <text x={lx} y={ly} textAnchor={anchor} className={styles.dayText}>DAY {String(r.day).padStart(2, '0')}</text>
                   <text x={lx} y={ly + 22} textAnchor={anchor} className={styles.amtText}>{formatAmount(r.reward.currency, r.reward.amount)}</text>
                   {hot && (
-                    <g transform={`translate(0 ${-size / 2 - 22})`} className={styles.chipBounce}>
+                    <g transform={`translate(0 ${-size / 2 - 22})`} >
                       <rect x="-30" y="-12" width="60" height="22" rx="11" className={styles.chip} /><text y="4" textAnchor="middle" className={styles.chipText}>TODAY</text>
                     </g>
                   )}
@@ -194,11 +222,18 @@ function StreakJourney({ streakData, celebration, claiming }) {
           );
         })}
 
-        <g ref={charRef} className={`${styles.char} ${claiming ? styles.busy : ''}`} transform={`translate(${geo.pts[0].x} ${geo.pts[0].y})`}>
-          <ellipse cy="2" rx="18" ry="5" className={styles.shadow} />
-          <g className={styles.bob}><image href={ICONS.flame} x="-26" y="-74" width="52" height="64" preserveAspectRatio="xMidYMid meet" /></g>
-        </g>
       </svg>
+      <div className={styles.overlay} aria-hidden="true">
+        {rewards.map((r, i) => r.status === 'AVAILABLE' && (
+          <span key={r.day} className={styles.haloWrap} style={{ left: `${(geo.pts[i + 1].x / geo.w) * 100}%`, top: `${(geo.pts[i + 1].y / geo.h) * 100}%`, '--hs': `${(r.isUltimate ? 150 : vertical ? 96 : 104) + 14}` }}>
+            <i className={styles.haloRing} />
+          </span>
+        ))}
+        <div ref={charRef} className={`${styles.char} ${claiming ? styles.busy : ''}`} style={{ opacity: 0 }}>
+          <div className={styles.bob}><img src={ICONS.flame} alt="" decoding="async" /></div>
+        </div>
+      </div>
+      </div>
 
       <div className={styles.detail} aria-live="polite">
         <img src={getRewardIcon(shown)} alt="" width="84" height="84" decoding="async" className={shown.status === 'LOCKED' ? styles.dimImg : ''} />

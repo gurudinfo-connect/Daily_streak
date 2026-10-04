@@ -39,12 +39,7 @@ body {
   color: var(--vl-text);
   font-family: var(--vl-font);
   -webkit-font-smoothing: antialiased;
-  background:
-    radial-gradient(circle at 10% 20%, rgba(108, 59, 255, 0.22), transparent 30%),
-    radial-gradient(circle at 85% 15%, rgba(255, 198, 46, 0.12), transparent 25%),
-    radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.18), transparent 30%),
-    linear-gradient(160deg, #07060d, #0a0814 60%, #120d26);
-  background-attachment: fixed;
+  background: #07060d;
 }
 
 h1, h2, h3 { font-family: var(--vl-font-display); letter-spacing: -0.01em; }
@@ -119,3 +114,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
     scroll-behavior: auto !important;
   }
 }
+
+/* One fixed, never-repainted glow layer for the whole app (replaces background-attachment: fixed). */
+body::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 40% at 82% 100%, rgba(74, 34, 122, .30), transparent 70%), radial-gradient(40% 30% at 8% 0, rgba(50, 21, 104, .20), transparent 70%); }
+
+/* Ambient animations stop when their section is off-screen or the tab is hidden. */
+[data-paused='true'], [data-paused='true'] *, [data-paused='true'] *::before, [data-paused='true'] *::after { animation-play-state: paused !important; }
