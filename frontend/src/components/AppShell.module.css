@@ -3,7 +3,7 @@
 
 /* ---- rail ---- */
 .rail { position: fixed; z-index: 70; inset: 0 auto 0 0; width: var(--rail); display: flex; flex-direction: column; padding: 14px 12px; overflow: hidden; background: #0b0a12; border-right: 1px solid #1a1727; transition: width .25s cubic-bezier(.4, 0, .2, 1), box-shadow .25s; }
-.rail:hover, .rail:focus-within, .pinned { width: 256px; box-shadow: 18px 0 40px rgba(0, 0, 0, .45); }
+.open { width: 256px; box-shadow: 18px 0 40px rgba(0, 0, 0, .45); }
 .logoBtn { display: flex; align-items: center; gap: 12px; padding: 0; margin-bottom: 18px; background: none; border: 0; color: var(--vl-text); cursor: pointer; border-radius: 14px; min-height: 44px; }
 .logoTile { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: linear-gradient(145deg, #4a227a, #24134d); box-shadow: 0 0 0 1px #5a3a9a inset; }
 .brandName { font: 800 1.1rem var(--vl-font-display); letter-spacing: -.02em; }
@@ -11,11 +11,11 @@
 .group { padding: 6px 0 10px; border-bottom: 1px solid #14121f; }
 .group:last-child { border: 0; }
 .groupTitle { height: 18px; padding: 0 14px; font: 500 .66rem 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .18em; text-transform: uppercase; color: #5d5877; opacity: 0; transition: opacity .15s; white-space: nowrap; }
-.rail:hover .groupTitle, .rail:focus-within .groupTitle, .pinned .groupTitle, .drawer .groupTitle { opacity: 1; }
+.open .groupTitle, .drawer .groupTitle { opacity: 1; }
 .link { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 0; margin: 2px 0; background: none; border: 0; border-radius: 14px; color: #8f8aab; text-decoration: none; font: 600 .92rem var(--vl-font); cursor: pointer; transition: color .15s, background .15s; }
 .ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; position: relative; }
 .lbl { white-space: nowrap; opacity: 0; transition: opacity .15s; }
-.rail:hover .lbl, .rail:focus-within .lbl, .pinned .lbl, .drawer .lbl { opacity: 1; }
+.open .lbl, .drawer .lbl { opacity: 1; }
 .link:hover { color: #fff; background: #151222; }
 .active { color: var(--vl-gold-soft); }
 .active .ico { background: #1d1626; box-shadow: 0 0 0 1px rgba(245, 184, 46, .45) inset, 0 0 16px rgba(245, 184, 46, .18); }

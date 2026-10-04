@@ -63,20 +63,33 @@ function Shell() {
   const { confirming, askLogout, cancelLogout, confirmLogout } = useLogout();
   const [open, setOpen] = useState(null); // null | 'bell' | 'user'
   const [drawer, setDrawer] = useState(false);
-  const [pinned, setPinned] = useState(false);
+  const [hover, setHover] = useState(false);   // cursor is over the rail
+  const [kbd, setKbd] = useState(false);       // rail was reached with the keyboard
+  const [pinned, setPinned] = useState(false); // logo click keeps it open until you pick a page / click away
   const menuRef = useRef(null);
+  const railRef = useRef(null);
+  const quiet = useRef(false);                 // after picking a page, ignore hover until the cursor really leaves
+  const expanded = hover || kbd || pinned;
   const name = displayNameOf(dash?.user, user);
   const email = dash?.user?.email || user?.email || '';
   const streak = dash?.streak?.currentStreak ?? 0;
 
-  useEffect(() => { setOpen(null); setDrawer(false); }, [pathname]);
+  useEffect(() => {
+    setOpen(null); setDrawer(false);
+    // Page chosen: collapse the rail now, drop focus so it cannot hold the menu open.
+    quiet.current = !!railRef.current?.matches(':hover'); setHover(false); setKbd(false); setPinned(false);
+    if (railRef.current?.contains(document.activeElement)) document.activeElement.blur();
+  }, [pathname]);
   useEffect(() => { // warm the other page chunks once the browser is idle
     const id = (window.requestIdleCallback || ((f) => setTimeout(f, 1500)))(prefetchPages);
     return () => (window.cancelIdleCallback ? window.cancelIdleCallback(id) : clearTimeout(id));
   }, []);
   useEffect(() => {
-    const out = (e) => menuRef.current && !menuRef.current.contains(e.target) && setOpen(null);
-    const esc = (e) => { if (e.key === 'Escape') { setOpen(null); setDrawer(false); setPinned(false); } };
+    const out = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setOpen(null);
+      if (railRef.current && !railRef.current.contains(e.target)) { setPinned(false); setHover(false); setKbd(false); }
+    };
+    const esc = (e) => { if (e.key === 'Escape') { setOpen(null); setDrawer(false); setPinned(false); setHover(false); setKbd(false); } };
     document.addEventListener('mousedown', out);
     document.addEventListener('keydown', esc);
     return () => { document.removeEventListener('mousedown', out); document.removeEventListener('keydown', esc); };
@@ -100,8 +113,13 @@ function Shell() {
 
   return (
     <div className={styles.shell}>
-      {/* ---- desktop rail: hover / focus / logo click expands it over the content, so nothing reflows ---- */}
-      <aside className={`${styles.rail} ${pinned ? styles.pinned : ''}`} aria-label="Sidebar">
+      {/* ---- desktop rail: hover or logo click expands it over the content (no reflow); it closes when the cursor
+           leaves, when a page is chosen, on outside click or Esc ---- */}
+      <aside ref={railRef} className={`${styles.rail} ${expanded ? styles.open : ''}`} aria-label="Sidebar"
+        onMouseEnter={() => { if (!quiet.current) setHover(true); }}
+        onMouseLeave={() => { quiet.current = false; setHover(false); }}
+        onFocus={(e) => { if (e.target.matches(':focus-visible')) setKbd(true); }}
+        onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setKbd(false); }}>
         <button className={styles.logoBtn} onClick={() => setPinned((p) => !p)} aria-label={pinned ? 'Collapse menu' : 'Expand menu'} aria-expanded={pinned}>
           <span className={styles.logoTile}><img src={fireLogo} alt="" width="22" height="22" /></span>
           <span className={`${styles.lbl} ${styles.brandName}`}>VELoop</span>

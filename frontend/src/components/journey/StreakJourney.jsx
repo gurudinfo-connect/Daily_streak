@@ -3,7 +3,8 @@ import { Lock, Check } from 'lucide-react';
 import styles from './Journey.module.css';
 import { ICONS, getRewardIcon } from '../../assets/icons.js';
 import useMediaQuery from '../../hooks/useMediaQuery.js';
-import { buildGeo, STARS } from './journeyLayout.js';
+import { buildGeo, campName, altitude, fmtM } from './journeyLayout.js';
+import Scenery from './Scenery.jsx';
 import { formatAmount } from '../../utils/streakInsights';
 import useLite from '../../hooks/useLite.js';
 import usePauseOffscreen from '../../hooks/usePauseOffscreen.js';
@@ -153,34 +154,28 @@ function StreakJourney({ streakData, celebration, claiming }) {
   return (
     <div ref={stageRef} className={`${styles.stage} ${vertical ? styles.vertical : ''}`}>
       <div className={styles.head}>
+        <span className={styles.elev}><i aria-hidden="true">▲</i> {idx > 0 ? `${campName(idx - 1, rewards.length)} · ${fmtM(altitude(idx - 1, rewards.length))}` : 'Trailhead · 2,860 m'}</span>
         <span className={styles.count}><b>{String(doneCount).padStart(2, '0')}</b> of {String(rewards.length).padStart(2, '0')} secured</span>
       </div>
       <div ref={canvasRef} className={styles.canvas} style={{ aspectRatio: `${geo.w} / ${geo.h}` }}>
-      {!lite && !vertical && <><span className={styles.comet} aria-hidden="true" /><span className={`${styles.comet} ${styles.comet2}`} aria-hidden="true" /></>}
-      <svg className={styles.svg} viewBox={`0 0 ${geo.w} ${geo.h}`} role="group" aria-label="Reward road" preserveAspectRatio="xMidYMid meet">
+            <svg className={styles.svg} viewBox={`0 0 ${geo.w} ${geo.h}`} role="group" aria-label="Reward road" preserveAspectRatio="xMidYMid meet">
         <defs>
           <radialGradient id="vlGlow"><stop offset="0" stopColor="#ffc94d" stopOpacity=".35" /><stop offset="1" stopColor="#ffc94d" stopOpacity="0" /></radialGradient>
           <linearGradient id="vlHill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2a1658" stopOpacity=".55" /><stop offset="1" stopColor="#0a0814" stopOpacity="0" /></linearGradient>
         </defs>
 
-        <g className={styles.decor} aria-hidden="true">
-          {!vertical && <><path d={`M0 ${geo.h} L0 ${geo.h - 90} L170 ${geo.h - 170} L320 ${geo.h - 100} L520 ${geo.h - 200} L760 ${geo.h - 90} L930 ${geo.h - 150} L${geo.w} ${geo.h - 80} L${geo.w} ${geo.h}Z`} fill="url(#vlHill)" />
-            <g><circle cx="150" cy="80" r="26" fill="#3b2275" /><ellipse cx="150" cy="80" rx="46" ry="9" fill="none" stroke="#6b4bd0" strokeWidth="2" transform="rotate(-18 150 80)" /></g></>}
-          {STARS.map((s, i) => (
-            <circle key={i} cx={(s.x / 100) * geo.w} cy={(s.y / 100) * geo.h} r={s.r} className={styles.star} />
-          ))}
-        </g>
+        <Scenery geo={geo} vertical={vertical} lite={lite} />
 
-        {/* road: base reveals, energy flows forward, gold fills behind the character */}
+        {/* trail: rope-line reveals, footsteps flow upward, gold fills behind the climber */}
         <path d={geo.d} className={styles.roadEdge} pathLength="1" />
         <path d={geo.d} className={styles.roadBed} pathLength="1" />
-        <path ref={pathRef} d={geo.d} className={styles.energy} />
+        <path ref={pathRef} d={geo.d} className={`${styles.energy} ${lite ? '' : styles.flowing}`} />
         <path ref={glowRef} d={geo.d} className={styles.trailGlow} strokeDasharray="0 99999" />
         <path ref={trailRef} d={geo.d} className={styles.trail} strokeDasharray="0 99999" />
 
         <g transform={`translate(${geo.pts[0].x} ${geo.pts[0].y})`}>
           <circle r="14" className={styles.startDot} />
-          <text y={vertical ? 5 : 38} x={vertical ? 26 : 0} textAnchor={vertical ? 'start' : 'middle'} className={styles.dayText}>START</text>
+          <text y={vertical ? 5 : 38} x={vertical ? 26 : 0} textAnchor={vertical ? 'start' : 'middle'} className={styles.dayText}>TRAILHEAD</text>
         </g>
 
         {rewards.map((r, i) => {
@@ -210,6 +205,7 @@ function StreakJourney({ streakData, celebration, claiming }) {
                   {st === 'LOCKED' && <g transform={`translate(${size / 2 - 12} ${-size / 2 + 12})`}><circle r="13" className={styles.lockBadge} /><path d="M-4.5 -1h9v7h-9z M-3 -1v-3a3 3 0 016 0V-1" className={styles.lockMark} /></g>}
                   <text x={lx} y={ly} textAnchor={anchor} className={styles.dayText}>DAY {String(r.day).padStart(2, '0')}</text>
                   <text x={lx} y={ly + 22} textAnchor={anchor} className={styles.amtText}>{formatAmount(r.reward.currency, r.reward.amount)}</text>
+                  <text x={lx} y={ly + 40} textAnchor={anchor} className={styles.campText}>{campName(i, rewards.length).toUpperCase()} · {fmtM(altitude(i, rewards.length))}</text>
                   {hot && (
                     <g transform={`translate(0 ${-size / 2 - 22})`} >
                       <rect x="-30" y="-12" width="60" height="22" rx="11" className={styles.chip} /><text y="4" textAnchor="middle" className={styles.chipText}>TODAY</text>
@@ -238,7 +234,8 @@ function StreakJourney({ streakData, celebration, claiming }) {
       <div className={styles.detail} aria-live="polite">
         <img src={getRewardIcon(shown)} alt="" width="84" height="84" decoding="async" className={shown.status === 'LOCKED' ? styles.dimImg : ''} />
         <div>
-          <p className={styles.dKick}>Day {String(shown.day).padStart(2, '0')} · {statusText(shown)}</p>
+          <p className={styles.dKick}>Day {String(shown.day).padStart(2, '0')} · {campName(shown.day - 1, rewards.length)} · {fmtM(altitude(shown.day - 1, rewards.length))}</p>
+          <p className={styles.dStatus}>{statusText(shown)}</p>
           <p className={styles.dAmt}>{formatAmount(shown.reward.currency, shown.reward.amount)}</p>
           {shown.reward.title !== formatAmount(shown.reward.currency, shown.reward.amount) && <p className={styles.dTitle}>{shown.reward.title}</p>}
         </div>
